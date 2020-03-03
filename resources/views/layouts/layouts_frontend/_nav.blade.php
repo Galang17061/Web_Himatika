@@ -14,7 +14,7 @@
                     <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                         <li><a href="{{route('index')}}" class="nav-link">Home</a></li>
                         <li><a href="{{route('profile')}}" class="nav-link">Profile</a></li>
-                        <li><a href="{{route('blog')}}" class="nav-link">Blog</a></li>
+                        <li><a href="{{route('post')}}" class="nav-link">Post</a></li>
                     <li><a href="{{route('contact')}}" class="nav-link">Contact</a></li>
                         <li class="has-children">
                             <a href="{{route('index')}}" class="nav-link">Info Kemahasiswaan</a>

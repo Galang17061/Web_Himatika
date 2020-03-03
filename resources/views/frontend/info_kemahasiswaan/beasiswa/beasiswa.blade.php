@@ -34,9 +34,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <ol class="breadcrumb">
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">Blog</a></li>
-                                        <li class="current"><a href="#">Blog Thumbnail Full Width</a></li>
+                                    <li><a href="{{route('index')}}">Home</a></li>
+                                        <li class="current"><a href="{{route('beasiswa')}}">Beasiswa</a></li>
                                     </ol>
                                 </div>
                             </div>

@@ -25,6 +25,8 @@
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 
+
+
 <!-- Style Customizer's stylesheets -->
 
 <link rel="stylesheet/less" type="text/css" href="{{asset('../assets_frontend/info_kemahasiswaan/template/less/skin.less')}}">

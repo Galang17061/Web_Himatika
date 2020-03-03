@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>HIMATIKA ITS</title>
+
     @yield('extra_style')
     @include('layouts.layouts_frontend._css')
+
+
 </head>
+
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 <div class="site-wrap" id="home-section">
 

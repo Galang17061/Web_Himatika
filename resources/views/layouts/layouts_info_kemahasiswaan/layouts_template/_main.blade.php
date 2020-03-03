@@ -29,6 +29,7 @@
         </div>
         <!--end wrapper boxed-->
         @include('layouts.layouts_info_kemahasiswaan.layouts_template._script')
+        @yield('extra_script')
     </body>
 
 </html>

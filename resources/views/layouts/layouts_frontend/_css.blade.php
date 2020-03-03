@@ -15,3 +15,10 @@
 
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="{{asset('../assets_frontend/main/css/style.css')}}">
+
+{{-- Font awesome --}}
+
+<link rel="stylesheet" href="{{asset('../assets_frontend/main/fontawesome/css/all.css')}}">
+
+{{-- Leaflet --}}
+{{-- <link rel="stylesheet" href="{{asset('../node_modules/leaflet/dist/leaflet.css')}}"> --}}

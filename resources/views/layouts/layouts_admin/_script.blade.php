@@ -42,3 +42,4 @@
 
 <!-- Datatable init js -->
 <script src="{{asset('../assets_backend/js/pages/datatables.init.js')}}"></script>
+<script src="{{ asset('../node_modules/dropify/dist/js/dropify.js') }}"></script>

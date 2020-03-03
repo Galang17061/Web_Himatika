@@ -173,12 +173,12 @@
 <div class="site-section bg-light">
     <div class="container">
         <div class="row">
-
+            
             <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="">
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/sosdev.html">
+                            <a href="{{route('profile_single')}}">
                                 <img src="{{asset('../assets_frontend/main/hima/Sosdev_190511_0025-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -196,7 +196,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/medfo.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/Medfo_190511_0004-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -214,7 +214,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/inaf.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/Inaf_190511_0006-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -232,7 +232,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/srd.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/SRD_190511_0005-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -249,7 +249,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/sw.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/SW_190511_0001-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -266,7 +266,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/asci.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/ASCI_190511_0005-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -283,7 +283,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/endev.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/Endev_190511_0005-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -300,7 +300,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/exa.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/EXA_190511_0032-1024x683.jpg')}}">
                             </a>
                         </span>
@@ -317,7 +317,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="profile/ga.html">
+                            <a href="#">
                                 <img src="{{asset('../assets_frontend/main/hima/GA_190511_0021-1024x683.jpg')}}">
                             </a>
                         </span>

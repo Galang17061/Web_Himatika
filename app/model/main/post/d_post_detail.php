@@ -1,0 +1,29 @@
+<?php
+
+namespace App\model\main\post;
+
+use Illuminate\Database\Eloquent\Model;
+
+class d_post_detail extends model
+{
+    protected $table = 'd_post_detail';
+    protected $primaryKey = 'dpd_id';
+    public $remember_token = false;
+    public $timestamps = false;
+    const UPDATED_AT = 'updated_at';
+    const CREATED_AT = 'created_at';
+    
+    protected $fillable = [
+                            'dpd_id',
+                            'dpd_category',
+                            'dpd_title',
+                            'dpd_description',
+                            'dpd_created_at'
+                          ];
+
+    public function getDateFormat()
+    {
+      return 'Y-m-d H:i:s';
+    } 
+
+}
