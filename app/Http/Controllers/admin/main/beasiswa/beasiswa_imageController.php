@@ -16,22 +16,17 @@ class beasiswa_imageController extends Controller
         $this->model = new models();
     }
 
-    // public function test($param){
-    //     return $this->model->m_beasiswa_image()->get()->where('mcp_id',$param);
-
-    // }
-
-    
-
     public function beasiswa_image()
     {
         //  $data = $this->model->d_beasiswa_image()->get();
         return view('admin.main.beasiswa.beasiswa_image.beasiswa_image');
     }
+
     public function beasiswa_image_create()
     {
         return view('admin.main.beasiswa.beasiswa_image.beasiswa_image_create');
     }
+    
     public function beasiswa_image_save(Request $req)
     {
         // return $req->all();

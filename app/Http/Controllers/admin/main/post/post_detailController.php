@@ -18,16 +18,18 @@ class post_detailController extends Controller
 
     public function post_detail()
     {
-        //  $data = $this->model->d_post_detail()->get();
-        return view('admin.main.post.post_detail.post_detail');
+        $data = $this->model->d_post_detail()->get();
+        return view('admin.main.post.post_detail.post_detail',compact('data'));
     }
+
     public function post_detail_create()
     {
-        return view('admin.main.post.post_detail.post_detail_create');
+        $m_category_post = $this->model->m_category_post()->get()->all();
+        return view('admin.main.post.post_detail.post_detail_create',compact('m_category_post'));
     }
+
     public function post_detail_save(Request $req)
     {
-        // return $req->all();
         DB::beginTransaction();
         try{
             $id = $this->model->d_post_detail()->max('dpd_id')+1;
@@ -41,38 +43,34 @@ class post_detailController extends Controller
                 'dpd_created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/main/post_detail');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('/main/post_detail/create');
         }
     }
 
-    public function post_detail_edit($id){
+    public function post_detail_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_post_detail()->get()->where('mcp_id',$id);
-        return view('admin.master.post_detail.post_detail_edit',compact('data'));
+        $data = $this->model->d_post_detail()->where('dpd_id',$req->id)->get()->first();
+        return view('admin.main.post.post_detail.post_detail_edit',compact('data'));
     }
 
     public function post_detail_update(Request $req)
     {
-        $simpan = $this->model->d_post_detail()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
+        // return $req->all();
+        $simpan = $this->model->d_post_detail()->where('dpd_id',$req->dpd_id)->update([
+            'dpd_title'=>$req->dpd_title,
+            'dpd_description'=>$req->dpd_description
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcp_id;
+        return redirect('/main/post_detail');
     }
 
-    public function post_detail_delete($id)
+    public function post_detail_delete(Request $req)
     {
-        // $data = $this->model->m_post_detail()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_post_detail()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
+        $delete =$this->model->d_post_detail()->where('dpd_id',$req->id)->delete();
+        return redirect('/main/post_detail');
     }
     public function post_detail_datatable()
     {

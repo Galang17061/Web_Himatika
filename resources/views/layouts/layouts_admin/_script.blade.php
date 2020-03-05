@@ -43,3 +43,9 @@
 <!-- Datatable init js -->
 <script src="{{asset('../assets_backend/js/pages/datatables.init.js')}}"></script>
 <script src="{{ asset('../node_modules/dropify/dist/js/dropify.js') }}"></script>
+<!--tinymce js-->
+<script src="{{asset('../assets_backend/libs/tinymce/tinymce.min.js')}}"></script>
+<!-- init js -->
+<script src="{{asset('../assets_backend/js/pages/form-editor.init.js')}}"></script>
+<!-- alertifyjs js -->
+<script src="{{asset('../assets_backend/libs/alertifyjs/build/alertify.min.js')}}"></script>

@@ -56,34 +56,26 @@
 
 
                                     <tbody>
-{{-- 
+
                                         @foreach($data as $index => $element)
                                         <tr>
                                             <td>{{$index+1}}</td>
                                             <td>
-                                                {{$element->dpd_title}}
+                                                {{$element->dpi_category}}
                                             </td>
                                             <td>
-                                                {{$element->dpd_description}}
+                                                {{$element->d_post_detail->dpd_title}}
                                             </td>
                                             <td>
-                                                {{$element->dpd_price_include}}
-                                            </td>
-                                            <td>
-                                                {{$element->dpd_price_exclude}}
-                                            </td>
-                                            <td>
-                                                {{$element->dpd_created_by}}
-                                            </td>
-                                            <td>
-                                                {{$element->dpd_updated_by}}
+                                                <?php $image_path = Storage::url('images/post/'.$element->dpi_image) ?>
+                                            <img src="{{url($image_path)}}" alt="{{$element->dpi_image}}">
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-warning"> Edit</button>
-                                                <button class="btn btn-sm btn-danger"> Delete</button>
+                                                <button class="btn btn-sm btn-danger" id="alert-confirm"> Delete</button>
                                             </td>
                                         </tr>
-                                        @endforeach --}}
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -109,5 +101,17 @@
 <script>
     $('#datatable').dataTable();
 
+$(function () {
+        $("#alert-confirm").click(function () {
+            var a = $(this).val()
+            alertify.confirm("Apakah yakin ingin menghapus?", function () {
+                console.log(a)
+                // window.location.href = baseUrl+'/main/post_detail/delete?&id='.argument
+                alertify.success("Berhasil Menghapus")
+            }, function () {
+                alertify.error("Dibatalkan")
+            })
+        })
+    });
 </script>
 @endsection

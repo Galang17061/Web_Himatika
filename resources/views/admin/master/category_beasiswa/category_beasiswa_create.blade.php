@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form_save">
+                            <form class="form_save" enctype="multipart/form-data" method="post" action="{{route('beasiswa_image_save')}}">
                                     @csrf
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="save()">Submit</button>
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit" >Submit</button>
                                 </div>
 
                                 </form>

@@ -19,6 +19,7 @@ use App\model\main\berita_terkini\d_berita_terkini_image;
 use App\model\main\berita_terkini\d_berita_terkini_detail;
 use App\model\main\keprofesian\d_keprofesian_image;
 use App\model\main\keprofesian\d_keprofesian_detail;
+use App\model\frontend\post\f_post;
 
 class models extends model
 {
@@ -100,6 +101,11 @@ class models extends model
     public function d_berita_terkini_image(){
         $d_berita_terkini_image = new d_berita_terkini_image();
         return $d_berita_terkini_image;
+    }
+
+    public function f_post(){
+        $f_post = new f_post();
+        return $f_post;
     }
 
 }

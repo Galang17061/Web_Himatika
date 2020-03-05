@@ -25,4 +25,12 @@ class d_post_image extends model
       return 'Y-m-d H:i:s';
     } 
 
+    public function m_category_post(){
+      return $this->belongsTo('App\model\master\m_category_post','dpi_id','mcp_id');
+    }
+
+    public function d_post_detail(){
+      return $this->belongsTo('App\model\main\post\d_post_detail','dpi_id','dpd_id');
+    }
+
 }

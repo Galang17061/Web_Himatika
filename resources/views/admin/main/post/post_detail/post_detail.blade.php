@@ -1,5 +1,15 @@
 @extends('layouts.layouts_admin._main')
 
+@section('extra_style')
+<!-- alertifyjs Css -->
+<link href="{{asset('../assets_backend/libs/alertifyjs/build/css/alertify.min.css')}}" rel="stylesheet"
+    type="text/css" />
+
+<!-- alertifyjs default themes  Css -->
+<link href="{{asset('../assets_backend/libs/alertifyjs/build/css/themes/default.min.css')}}" rel="stylesheet"
+    type="text/css" />
+@endsection
+
 @section('content')
 
 <div class="main-content">
@@ -25,11 +35,12 @@
                                     <i class="mdi mdi-settings-outline mr-1"></i> Settings
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
-                                    <a class="dropdown-item" href="{{route('post_detail_create')}}"><i class="fas fa-plus"></i>   Create</a>
+                                    <a class="dropdown-item" href="{{route('post_detail_create')}}"><i
+                                            class="fas fa-plus"></i> Create</a>
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
             </div>
@@ -57,35 +68,28 @@
 
 
                                     <tbody>
-{{-- 
-                                        @foreach($data as $index => $element)
+                                        @foreach($data as $index=>$element)
                                         <tr>
                                             <td>{{$index+1}}</td>
                                             <td>
                                                 {{$element->dpd_title}}
                                             </td>
                                             <td>
-                                                {{$element->dpd_description}}
+                                                {{$element->dpd_category}}
                                             </td>
                                             <td>
-                                                {{$element->dpd_price_include}}
+                                                {{substr($element->dpd_description,3,(strlen($element->dpd_description)-7))}}
                                             </td>
                                             <td>
-                                                {{$element->dpd_price_exclude}}
+                                                {{$element->dpd_created_at}}
                                             </td>
                                             <td>
-                                                {{$element->dpd_created_by}}
-                                            </td>
-                                            <td>
-                                                {{$element->dpd_updated_by}}
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-warning"> Edit</button>
-                                                <button class="btn btn-sm btn-danger"> Delete</button>
+                                                <button class="btn btn-sm btn-warning"
+                                                    onclick="edit({{$element->dpd_id}})"> Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleted({{$element->dpd_id}})">Delete</button>
                                             </td>
                                         </tr>
-                                        @endforeach --}}
-
+                                        @endforeach
                                     </tbody>
                                 </table>
 
@@ -111,4 +115,33 @@
     $('#datatable').dataTable();
 
 </script>
+
+
+
+<script>
+    function edit(argument) {
+        window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/post_detail/edit?&id='+argument;
+    }
+
+    function deleted(argument){
+        window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/post_detail/delete?&id='+argument;
+    }
+</script>
+
+<script>
+    $(function () {
+        $("#alert-confirm").click(function () {
+            var a = $(this).val()
+            alertify.confirm("Apakah yakin ingin menghapus?", function () {
+                console.log(a)
+                // window.location.href = baseUrl+'/main/post_detail/delete?&id='.argument
+                alertify.success("Berhasil Menghapus")
+            }, function () {
+                alertify.error("Dibatalkan")
+            })
+        })
+    });
+</script>
+
+{{-- <script src="{{asset('../assets_backend/js/pages/alertifyjs.init.js')}}"></script> --}}
 @endsection

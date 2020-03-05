@@ -63,10 +63,8 @@
                                                 {{$element->mcp_title}}
                                             </td>
                                             <td>
-                                            <a href="#">
-                                                <button class="btn btn-sm btn-warning"> Edit</button>
-                                            </a>
-                                                <button class="btn btn-sm btn-danger"> Delete</button>
+                                                <button class="btn btn-sm btn-warning" onclick="edit({{$element->mcp_id}})"> Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleted({{$element->mcp_id}})"> Delete</button>
                                                 
                                             </td>
                                         </tr>
@@ -96,6 +94,12 @@
 <script>
     $('#datatable').dataTable();
 
+function edit(argument){
+    window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/master/category_post/edit?&id='+argument
+}
 
+function deleted(argument){
+    window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/master/category_post/delete?&id='+argument
+}
 </script>
 @endsection

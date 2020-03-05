@@ -21,6 +21,17 @@ class m_category_post extends model
     public function getDateFormat()
     {
       return 'Y-m-d H:i:s';
-    } 
+    }
 
+    public function d_post_detail(){
+      return $this->hasMany('App\model\main\post\d_post_detail','dpd_id','mcp_id');
+    }
+
+    public function d_post_image(){
+      return $this->hasMany('App\model\main\post\d_post_image','dpi_id','mcp_id');
+    }
+
+    public function f_post(){
+      return $this->belongsTo('App\model\frontend\post','dpi_id','fp_id');
+    }
 }

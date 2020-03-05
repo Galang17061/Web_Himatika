@@ -94,7 +94,7 @@ Route::get('/main/olimpiade_image/datatable', 'admin\main\olimpiade\olimpiade_im
 // Post Detail
 Route::get('/main/post_detail', 'admin\main\post\post_detailController@post_detail')->name('post_detail');
 Route::get('/main/post_detail/create', 'admin\main\post\post_detailController@post_detail_create')->name('post_detail_create');
-Route::get('/main/post_detail/edit/{id}', 'admin\main\post\post_detailController@post_detail_edit')->name('post_detail_edit/{id}');
+Route::get('/main/post_detail/edit', 'admin\main\post\post_detailController@post_detail_edit')->name('post_detail_edit');
 Route::post('/main/post_detail/save', 'admin\main\post\post_detailController@post_detail_save')->name('post_detail_save');
 Route::post('/main/post_detail/update', 'admin\main\post\post_detailController@post_detail_update')->name('post_detail_update');
 Route::get('/main/post_detail/delete', 'admin\main\post\post_detailController@post_detail_delete')->name('post_detail_delete');
@@ -106,7 +106,6 @@ Route::get('/main/post_image/create', 'admin\main\post\post_imageController@post
 // Route::get('/post_image/tes', 'admin\main\post\post_imageController@tes')->name('tes');
 Route::get('/main/post_image/edit/{id}', 'admin\main\post\post_imageController@post_image_edit')->name('post_image_edit/{id}');
 Route::post('/main/post_image/save', 'admin\main\post\post_imageController@post_image_save')->name('post_image_save');
-// Route::post('/main/post_image/return', 'admin\main\post\post_imageController@post_image_return')->name('post_image_return');
 Route::post('/main/post_image/update', 'admin\main\post\post_imageController@post_image_update')->name('post_image_update');
 Route::get('/main/post_image/delete', 'admin\main\post\post_imageController@post_image_delete')->name('post_image_delete');
 Route::get('/main/post_image/datatable', 'admin\main\post\post_imageController@post_image_datatable')->name('post_image_datatable');
@@ -124,6 +123,7 @@ Route::get('/master/category_post', 'admin\master\category_post\category_postCon
 Route::get('/master/category_post/create', 'admin\master\category_post\category_postController@category_post_create')->name('category_post_create');
 Route::post('/master/category_post/save', 'admin\master\category_post\category_postController@category_post_save')->name('category_post_save');
 Route::post('/master/category_post/update', 'admin\master\category_post\category_postController@category_post_update')->name('category_post_update');
+Route::get('/master/category_post/edit', 'admin\master\category_post\category_postController@category_post_edit')->name('category_post_edit');
 Route::get('/master/category_post/delete', 'admin\master\category_post\category_postController@category_post_delete')->name('category_post_delete');
 Route::get('/master/category_post/datatable', 'admin\master\category_post\category_postController@category_post_datatable')->name('category_post_datatable');
 
@@ -157,7 +157,7 @@ Route::get('/frontend/profile_single', 'frontend\profile_single\profile_singleCo
 
 // Post
 Route::get('/frontend/post', 'frontend\post\postController@post')->name('post');
-Route::get('/frontend/post_single', 'frontend\post_single\post_singleController@post_single')->name('post_single');
+Route::get('/frontend/post_single', 'frontend\post\postController@post_single')->name('post_single');
 
 // Contact
 Route::get('/frontend/contact', 'frontend\contact\contactController@contact')->name('contact');

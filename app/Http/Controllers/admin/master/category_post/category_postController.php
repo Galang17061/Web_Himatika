@@ -16,15 +16,17 @@ class category_postController extends Controller
         $this->model = new models();
     }
 
-    public function category_post(Request $data)
+    public function category_post(Request $req)
     {
-         $data = $this->model->m_category_post()->get();
+        $data = $this->model->m_category_post()->with('d_post_detail')->with('d_post_image')->get()->all();
         return view('admin.master.category_post.category_post',compact('data'));
     }
+
     public function category_post_create()
     {
         return view('admin.master.category_post.category_post_create');
     }
+
     public function category_post_save(Request $req)
     {
         // return $req->all();
@@ -38,17 +40,17 @@ class category_postController extends Controller
                 'mcp_title'=>$req->mcp_title,
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/master/category_post');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('/master/category_post/create');
         }
     }
 
-    public function category_post_edit($id){
+    public function category_post_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->m_category_post()->get()->where('mcp_id',$id);
+        $data = $this->model->m_category_post()->get()->where('mcp_id',$req->id);
         return view('admin.master.category_post.category_post_edit',compact('data'));
     }
 
@@ -57,19 +59,13 @@ class category_postController extends Controller
         $simpan = $this->model->m_category_post()->where('mcp_id',$req->mcp_id)->update([
             'mcp_title'=>$req->mcp_title
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcp_id;
+        return redirect('/master/category_post');
     }
 
-    public function category_post_delete($id)
+    public function category_post_delete(Request $req)
     {
-        // $data = $this->model->m_category_post()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_category_post()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
+        $delete = $this->model->m_category_post()->where('mcp_id',$req->id)->delete();
+        return redirect('/master/category_post');
     }
     public function category_post_datatable()
     {

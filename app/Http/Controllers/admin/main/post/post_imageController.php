@@ -22,15 +22,17 @@ class post_imageController extends Controller
         return $param->all();
     }
 
-    public function post_image(Request $data)
+    public function post_image()
     {
-         $data = $this->model->d_post_image()->get();
+        $data = $this->model->d_post_image()->with('m_category_post')->with('d_post_detail')->get()->all();
         return view('admin.main.post.post_image.post_image',compact('data'));
     }
 
     public function post_image_create()
     {
-        return view('admin.main.post.post_image.post_image_create');
+        $m_category_post = $this->model->m_category_post()->get()->all();
+        $d_post_detail = $this->model->d_post_detail()->get()->all();
+        return view('admin.main.post.post_image.post_image_create',compact('m_category_post','d_post_detail'));
     }
 
     public function post_image_return(Request $req)
@@ -44,6 +46,7 @@ class post_imageController extends Controller
 
     public function post_image_save(Request $req)
     {
+        // dd($req->get('dpi_title'));
         // Validate that the file is image type
         $this->validate($req,[
             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:7000',
@@ -56,13 +59,13 @@ class post_imageController extends Controller
             // Save
             $simpan = $this->model->d_post_image()->create([
                 'dpi_id'=>$id,
-                'dpi_category'=>$req->dpi_category,
-                'dpi_title'=>$req->dpi_title,
+                'dpi_category'=>$req->get('dpi_category'),
+                'dpi_title'=>$req->get('dpi_title'),
                 'dpi_image'=>'post_'.$id.'_image'.'.jpg',
             ]);
 
             Storage::putFileAs(
-            'public/images',
+            'public/images/info_kemahasiswaan/post',
             $req->file('image'),
             'post_'.$id.'_image'.'.jpg');
 

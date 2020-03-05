@@ -44,18 +44,28 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="example-text-input" class="col-md-2 col-form-label">Category</label>
+                                        <label for="example-text-input" class="col-md-2 col-form-label">Kategory</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="text" name="dpi_category" value=""
-                                                id="example-text-input">
+                                            <select class="form-control" name="dpi_category" id="dpi_category">
+                                                @foreach($m_category_post as $element)
+                                                    <option value="{{$element->mcp_id}}">
+                                                        {{$element->mcp_title}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="example-text-input" class="col-md-2 col-form-label">Nama
                                             Post</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="text" name="dpi_title" value=""
-                                                id="example-text-input">
+                                            <select class="form-control" name="dpi_title" id="dpi_title">
+                                                @foreach($d_post_detail as $element)
+                                                    <option value="{{$element->dpd_id}}">
+                                                        {{$element->dpd_title}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="tab-pane " id="images" role="tabpanel">
@@ -63,7 +73,7 @@
                                             <label for="example-text-input"
                                                 class="col-md-2 col-form-label">Image</label>
                                             <div class="col-md-10">
-                                                <input type="file" class="dropify image" name="image">
+                                                <input type="file" class="dropify"/>
                                             </div>
                                         </div>
                                     </div>
@@ -91,9 +101,6 @@
 @endsection
 
 @section('extra_script')
-<script src="{{asset('../assets_backend/libs/alertifyjs/build/alertify.min.js')}}"></script>
-
-<script src="{{asset('../assets_backend/js/pages/alertifyjs.init.js')}}"></script>
 <script>
     $('.dropify').dropify();
 

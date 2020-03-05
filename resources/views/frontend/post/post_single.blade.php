@@ -1,13 +1,14 @@
-@extends('layouts.layouts_post._main')
+@extends('layouts.layouts_frontend._main')
 
 @section('content')
+<?php $image_path = Storage::url('images/info_kemahasiswaan/post/'.$data->d_post_image[0]->dpi_image); ?>
 <section class="blog_area single-post-area area-padding">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 posts-list">
                 <div class="single-post">
                     <div class="feature-img">
-                        <img class="img-fluid" src="{{asset('../assets_frontend/main/images/hero_1.jpg')}}" alt="">
+                    <img class="img-fluid" src="{{url($image_path)}}" alt="">
                     </div>
 
                     <div class="blog_details">

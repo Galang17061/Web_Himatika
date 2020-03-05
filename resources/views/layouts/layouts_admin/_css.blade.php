@@ -13,3 +13,6 @@
 <link href="{{asset('../assets_backend/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <!-- App Css-->
 <link href="{{asset('../assets_backend/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+{{-- Dropify --}}
+<link rel="stylesheet" href="{{asset('../node_modules/dropify/dist/css/dropify.css')}}">
+<link rel="stylesheet" href="{{asset('../node_modules/dropify/dist/css/dropify.css')}}">
