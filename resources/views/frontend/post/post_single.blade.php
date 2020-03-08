@@ -1,7 +1,7 @@
-@extends('layouts.layouts_frontend._main')
+@extends('layouts.layouts_post._main')
 
 @section('content')
-<?php $image_path = Storage::url('images/info_kemahasiswaan/post/'.$data->d_post_image[0]->dpi_image); ?>
+<?php $image_path = Storage::url('images/post/'.$data->dpi_image); ?>
 <section class="blog_area single-post-area area-padding">
     <div class="container">
         <div class="row">
@@ -12,32 +12,13 @@
                     </div>
 
                     <div class="blog_details">
-                        <h2>Second divided from form fish beast made every of seas
-                        all gathered us saying he our</h2>
+                        <h2>{{$data->dpi_title}}</h2>
                         <ul class="blog-info-link mt-3 mb-4">
-                            <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
+                            <li><a href="#"><i class="far fa-user"></i>{{$data->m_category_post->mcp_title}}</a></li>
                             <li><a href="#"><i class="far fa-comments"></i> 03 Comments</a></li>
                         </ul>
                         <p class="excert">
-                            MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower
-
-                        </p>
-                        <p>
-                            MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training. who has the willpower to actually 
-                        </p>
-                        <div class="quote-wrapper">
-                            <div class="quotes">
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training.
-                            </div>
-                        </div>
-
-
-                        <p>
-                            MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower
-
-                        </p>
-                        <p>
-                            MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training. who has the willpower to actually 
+                            {{$data->d_post_detail->dpd_description}}
                         </p>
                     </div>
                 </div>
@@ -48,42 +29,14 @@
                     <aside class="single_sidebar_widget post_category_widget">
                         <h4 class="widget_title">Category</h4>
                         <ul class="list cat-list">
+                            @foreach($m_category_post as $element)
                             <li>
                                 <a href="#" class="d-flex">
-                                    <p>Resaurant food</p>
-                                    <p>(37)</p>
+                                    <p>{{$element->mcp_title}}</p>
+                                    <p>()</p>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Travel news</p>
-                                    <p>(10)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Modern technology</p>
-                                    <p>(03)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Product</p>
-                                    <p>(11)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Inspiration</p>
-                                    <p>(21)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Health Care</p>
-                                    <p>(21)</p>
-                                </a>
-                            </li>
+                            @endforeach
                         </ul>
                     </aside>
 

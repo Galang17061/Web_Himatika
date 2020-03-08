@@ -46,8 +46,7 @@ class post_imageController extends Controller
 
     public function post_image_save(Request $req)
     {
-        // dd($req->get('dpi_title'));
-        // Validate that the file is image type
+        // return $req->file('image');
         $this->validate($req,[
             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:7000',
         ]);
@@ -65,16 +64,16 @@ class post_imageController extends Controller
             ]);
 
             Storage::putFileAs(
-            'public/images/info_kemahasiswaan/post',
+            'public/images/post',
             $req->file('image'),
             'post_'.$id.'_image'.'.jpg');
 
             DB::commit();
-            return redirect()->back()->withSuccess('Sukses');
+            return redirect('/main/post_image');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect()->back()->withError('Sukses');
         }
     }
 
@@ -94,10 +93,6 @@ class post_imageController extends Controller
     
     public function post_image_delete($id)
     {
-        // $data = $this->model->m_post_image()->get()->where('dpi_id',$id);
-        // $update = $data = $this->model->m_post_image()->get()->where('dpi_id',$id)->update([
-        //     'dpi_title'=>$id->dpi_title
-        // ]);
     }
     public function post_image_datatable()
     {

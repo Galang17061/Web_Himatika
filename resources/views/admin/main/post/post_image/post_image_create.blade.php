@@ -73,7 +73,7 @@
                                             <label for="example-text-input"
                                                 class="col-md-2 col-form-label">Image</label>
                                             <div class="col-md-10">
-                                                <input type="file" class="dropify"/>
+                                                <input type="file" class="dropify" name="image" id="image"/>
                                             </div>
                                         </div>
                                     </div>
@@ -103,46 +103,6 @@
 @section('extra_script')
 <script>
     $('.dropify').dropify();
-
-    function save(argument) {
-        var form = $('.form_save');
-        formdata = new FormData(form[0]);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Save!'
-        }).then((result) => {
-            $.ajax({
-                type: "post",
-                url: "{{ route('post_image_save') }}",
-                data: formdata ? formdata : form.serialize(),
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.status == 'sukses') {
-                        if (result.value) {
-                            Swal.fire('Saved!', 'Your file has been Saved.', 'success')
-                        }
-                    } else if (data.status == 'gagal') {
-                        if (result.value) {
-                            Swal.fire('Fail!', 'your file could not be saved', 'error')
-                        }
-                    }
-                }
-            });
-
-        })
-
-    }
 
 </script>
 @endsection

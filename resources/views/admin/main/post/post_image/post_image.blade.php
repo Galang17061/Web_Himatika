@@ -11,10 +11,10 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h4 class="page-title mb-1">Master User</h4>
+                        <h4 class="page-title mb-1">Main Post Image</h4>
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Master</a></li>
-                            <li class="breadcrumb-item active">Master User</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Main</a></li>
+                            <li class="breadcrumb-item active">Main Post Detail</li>
                         </ol>
                     </div>
                     <div class="col-md-4">
@@ -68,7 +68,7 @@
                                             </td>
                                             <td>
                                                 <?php $image_path = Storage::url('images/post/'.$element->dpi_image) ?>
-                                            <img src="{{url($image_path)}}" alt="{{$element->dpi_image}}">
+                                            <img src="{{url($image_path)}}" alt="{{$element->dpi_image}}" style="height: 100px;width: 100px">
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-warning"> Edit</button>

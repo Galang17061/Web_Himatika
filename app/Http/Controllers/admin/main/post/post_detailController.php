@@ -6,6 +6,7 @@ use App\models;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Carbon\Carbon;
 
 class post_detailController extends Controller
 {
@@ -33,7 +34,6 @@ class post_detailController extends Controller
         DB::beginTransaction();
         try{
             $id = $this->model->d_post_detail()->max('dpd_id')+1;
-
             // Save
             $simpan = $this->model->d_post_detail()->create([
                 'dpd_id'=>$id,
@@ -70,6 +70,7 @@ class post_detailController extends Controller
     public function post_detail_delete(Request $req)
     {
         $delete =$this->model->d_post_detail()->where('dpd_id',$req->id)->delete();
+        $post_image_detele = $this->d_post_image()->where('dpi_id',$req->id)->delete();
         return redirect('/main/post_detail');
     }
     public function post_detail_datatable()

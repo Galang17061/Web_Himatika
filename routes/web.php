@@ -157,7 +157,7 @@ Route::get('/frontend/profile_single', 'frontend\profile_single\profile_singleCo
 
 // Post
 Route::get('/frontend/post', 'frontend\post\postController@post')->name('post');
-Route::get('/frontend/post_single', 'frontend\post\postController@post_single')->name('post_single');
+Route::get('/frontend/post_single/{id}', 'frontend\post\postController@post_single')->name('post_single');
 
 // Contact
 Route::get('/frontend/contact', 'frontend\contact\contactController@contact')->name('contact');

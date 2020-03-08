@@ -63,6 +63,7 @@
                                             <th>Kategori</th>
                                             <th>Isi Post</th>
                                             <th>Dibuat Tanggal</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -78,7 +79,7 @@
                                                 {{$element->dpd_category}}
                                             </td>
                                             <td>
-                                                {{substr($element->dpd_description,3,(strlen($element->dpd_description)-7))}}
+                                                {!! $element->dpd_description!!}
                                             </td>
                                             <td>
                                                 {{$element->dpd_created_at}}

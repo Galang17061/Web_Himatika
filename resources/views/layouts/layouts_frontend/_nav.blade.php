@@ -5,7 +5,7 @@
 
 
             <div class="site-logo">
-                <a href="index.html" class="text-black"><span class="text-primary">HIMATIKA ITS</a>
+            <a href="{{route('index')}}" class="text-black"><span class="text-primary">HIMATIKA ITS</a>
             </div>
 
             <div class="col-12">

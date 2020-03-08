@@ -1,4 +1,17 @@
-@extends('layouts.layouts_frontend._main')
+<?php
+// Taking date from each post
+$date = array();
+$month = array();
+$dummy= array();
+$dummy2= array();
+for($i = 0; $i < count($d_post_detail); $i++){
+    $dummy[$i] = str_replace(' ','-',$d_post_detail[$i]['dpd_created_at']);
+    $dummy2[$i] = str_replace(':','-',$dummy[$i]);
+    $date[$i] = explode('-',$dummy2[$i]);
+}
+?>
+
+@extends('layouts.layouts_post._main')
 @section('content')
 
 <section class="banner_area">
@@ -22,26 +35,43 @@
         <div class="row">
             <div class="col-lg-8 mb-5 mb-lg-0">
                 <div class="blog_left_sidebar">
-                    @foreach($data as $element)
+                    @foreach($d_post_image as $element)
+                    <?php $image_path = Storage::url('images/post/'.$element->dpi_image);?>
                     <article class="blog_item">
                         <div class="blog_item_img">
-                            <img class="card-img rounded-0"
-                                src="{{asset('../assets_frontend/main/images/hero_1.jpg')}}" alt="">
-                                <a href="#" class="blog_item_date">
-                                <h3>15</h3>
-                                <p>Jan</p>
-                                </a>
+                        <img class="card-img rounded-0" src="{{url($image_path)}}" alt="{{$element->dpi_image}}">
+                            <a href="{{route('post_single',[$element->dpi_id])}}" class="blog_item_date">
+                                {{-- Convert timestamp by part --}}
+
+                                <h3>
+                                    <?php
+                                    $index = $element->dpi_id;
+                                    print($date[$index-1][2]);
+                                    ?>
+                                </h3>
+                                <p>
+                                    <?php
+                                        $index = $element->dpi_id;
+                                        $month = date("F", mktime(0, 0, 0, $date[$index-1][1], 10));
+                                        print($month);
+                                    ?>
+                                </p>
+                            </a>
                         </div>
 
                         <div class="blog_details">
-                            <a class="d-inline-block" href="#">
-                                <h2>Google inks pact for new 35-storey office</h2>
+                            <a class="d-inline-block" href="{{route('post_single',[$element->dpi_id])}}">
+                                <h2>{{($element->dpi_title)}}</h2>
                             </a>
-                            <p>That dominion stars lights dominion divide years for fourth have don't stars is that he
-                                earth it first without heaven in place seed it second morning saying.</p>
+                            <p>
+                                {!! $element->d_post_detail->dpd_description !!}
+                                {{-- {{substr($element->d_post_detail->dpd_description,3,(strlen($element->d_post_detail->dpd_description)-7))}} --}}
+                            </p>
                             <ul class="blog-info-link">
-                                <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
-                                <li><a href="#"><i class="far fa-comments"></i> 03 Comments</a></li>
+                                <li><a href="{{route('post_single',[$element->dpi_id])}}"><i
+                                            class="far fa-user"></i>{{$element->d_post_detail->m_category_post['mcp_title']}}</a>
+                                </li>
+                                <li><a href="{{route('post_single',[$element->dpi_id])}}"><i class="far fa-comments"></i> 03 Comments</a></li>
                             </ul>
                         </div>
                     </article>
@@ -72,101 +102,35 @@
 
             <div class="col-lg-4">
                 <div class="blog_right_sidebar">
-                    <aside class="single_sidebar_widget search_widget">
-                        <form action="#">
-                            <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Search Keyword">
-                                    <div class="input-group-append">
-                                        <button class="btn" type="button"><i class="ti-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary w-100 rounded-0" style="padding:12px 54px "
-                                type="submit">Search</button>
-                        </form>
-                    </aside>
-
                     <aside class="single_sidebar_widget post_category_widget">
                         <h4 class="widget_title">Category</h4>
                         <ul class="list cat-list">
+                            @foreach($m_category_post as $element)
                             <li>
-                                <a href="#" class="d-flex">
-                                    <p>Resaurant food</p>
-                                    <p>(37)</p>
+                                <a href="{{route('post_single',[$element->mcp_id])}}" class="d-flex">
+                                    <p>{{$element->mcp_title}}</p>
+                                    <p>()</p>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Travel news</p>
-                                    <p>(10)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Modern technology</p>
-                                    <p>(03)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Product</p>
-                                    <p>(11)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Inspiration</p>
-                                    <p>21</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Health Care (21)</p>
-                                    <p>09</p>
-                                </a>
-                            </li>
+                            @endforeach
                         </ul>
                     </aside>
 
                     <aside class="single_sidebar_widget popular_post_widget">
                         <h3 class="widget_title">Recent Post</h3>
+                        @foreach($d_post_image as $element)
+                        <?php $image_path = Storage::url('images/post/'.$element->dpi_image);?>
                         <div class="media post_item">
-                            <img src="img/blog/popular-post/post1.jpg" alt="post">
+                            <img src="{{url($image_path)}}" alt="post" style="width: 100px;height:100px">
                             <div class="media-body">
-                                <a href="single-blog.html">
-                                    <h3>From life was you fish...</h3>
+                                <a href="{{route('post_single',[$element->dpi_id])}}">
+                                    <h3>{{$element->d_post_detail->dpd_title}}</h3>
                                 </a>
-                                <p>January 12, 2019</p>
+                                <p>{{$date[$element->dpi_id-1][0]}} {{$date[$element->dpi_id-1][1]}}
+                                    {{$date[$element->dpi_id-1][2]}}</p>
                             </div>
                         </div>
-                        <div class="media post_item">
-                            <img src="img/blog/popular-post/post2.jpg" alt="post">
-                            <div class="media-body">
-                                <a href="single-blog.html">
-                                    <h3>The Amazing Hubble</h3>
-                                </a>
-                                <p>02 Hours ago</p>
-                            </div>
-                        </div>
-                        <div class="media post_item">
-                            <img src="img/blog/popular-post/post3.jpg" alt="post">
-                            <div class="media-body">
-                                <a href="single-blog.html">
-                                    <h3>Astronomy Or Astrology</h3>
-                                </a>
-                                <p>03 Hours ago</p>
-                            </div>
-                        </div>
-                        <div class="media post_item">
-                            <img src="img/blog/popular-post/post4.jpg" alt="post">
-                            <div class="media-body">
-                                <a href="single-blog.html">
-                                    <h3>Asteroids telescope</h3>
-                                </a>
-                                <p>01 Hours ago</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </aside>
 
                 </div>
@@ -175,12 +139,4 @@
     </div>
 </section>
 
-@endsection
-
-@section('extra_script')
-<script>
-    function redirect(argument){
-        window.location.href = baseUrl+'/frontend/post_single?&id='.argument;
-    }
-</script>
 @endsection

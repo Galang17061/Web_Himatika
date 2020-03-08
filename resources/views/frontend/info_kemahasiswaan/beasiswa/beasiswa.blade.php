@@ -1,4 +1,4 @@
-@extends('layouts.layouts_info_kemahasiswaan.layouts_template._main')
+@extends('layouts.layouts_frontend._main')
 
 @section('content')
 <section class="section-side-image clearfix">
