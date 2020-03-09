@@ -19,6 +19,12 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
+// Login
+Route::get('/login', 'Auth\LoginController@index')->name('login_index');
+Route::get('/login_proses', 'Auth\LoginController@login')->name('login');
+
+Auth::routes();
+
 // Beasiswa detail
 Route::get('/main/beasiswa_detail', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail')->name('beasiswa_detail');
 Route::get('/main/beasiswa_detail/create', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_create')->name('beasiswa_detail_create');
@@ -103,7 +109,6 @@ Route::get('/main/post_detail/datatable', 'admin\main\post\post_detailController
 // Post Image
 Route::get('/main/post_image', 'admin\main\post\post_imageController@post_image')->name('post_image');
 Route::get('/main/post_image/create', 'admin\main\post\post_imageController@post_image_create')->name('post_image_create');
-// Route::get('/post_image/tes', 'admin\main\post\post_imageController@tes')->name('tes');
 Route::get('/main/post_image/edit/{id}', 'admin\main\post\post_imageController@post_image_edit')->name('post_image_edit/{id}');
 Route::post('/main/post_image/save', 'admin\main\post\post_imageController@post_image_save')->name('post_image_save');
 Route::post('/main/post_image/update', 'admin\main\post\post_imageController@post_image_update')->name('post_image_update');
@@ -151,6 +156,8 @@ Route::post('/master/category_keprofesian/update', 'admin\master\category_keprof
 Route::get('/master/category_keprofesian/delete', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_delete')->name('category_keprofesian_delete');
 Route::get('/master/category_keprofesian/datatable', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_datatable')->name('category_keprofesian_datatable');
 
+// -------------------------- Frontend ---------------------------
+
 // Profile
 Route::get('/frontend/profile', 'frontend\profile\profileController@profile')->name('profile');
 Route::get('/frontend/profile_single', 'frontend\profile_single\profile_singleController@profile_single')->name('profile_single');
@@ -179,10 +186,47 @@ Route::get('/frontend/olimpiade_single', 'frontend\olimpiade_single\olimpiade_si
 Route::get('/frontend/keprofesian', 'frontend\keprofesian\keprofesianController@keprofesian')->name('keprofesian');
 Route::get('/frontend/keprofesian_single', 'frontend\keprofesian_single\keprofesian_singleController@keprofesian_single')->name('keprofesian_single');
 
-// Login
-Route::get('/login', 'Auth\LoginController@index')->name('login_index');
-Route::get('/login_proses', 'Auth\LoginController@login')->name('login');
+// Departement
 
-Auth::routes();
+// Medfo
+Route::get('/master/departement/backend_medfo', 'admin\master\departement\medfo\backend_medfoController@backend_medfo')->name('backend_medfo');
+Route::post('/master/departement/backend_medfo_update', 'admin\master\departement\medfo\backend_medfoController@backend_medfo_update')->name('backend_medfo_update');
+
+// SW
+Route::get('/master/departement/backend_SW', 'admin\master\departement\SW\backend_SWController@backend_SW')->name('backend_SW');
+Route::post('/master/departement/backend_SW_update', 'admin\master\departement\SW\backend_SWController@backend_SW_update')->name('backend_SW_update');
+
+// GA
+Route::get('/master/departement/backend_GA', 'admin\master\departement\GA\backend_GAController@backend_GA')->name('backend_GA');
+Route::post('/master/departement/backend_GA_update', 'admin\master\departement\GA\backend_GAController@backend_GA_update')->name('backend_GA_update');
+
+// Inaf
+Route::get('/master/departement/backend_Inaf', 'admin\master\departement\Inaf\backend_InafController@backend_Inaf')->name('backend_Inaf');
+Route::post('/master/departement/backend_Inaf_update', 'admin\master\departement\Inaf\backend_InafController@backend_Inaf_update')->name('backend_Inaf_update');
+
+// Asci
+Route::get('/master/departement/backend_Asci', 'admin\master\departement\Asci\backend_AsciController@backend_Asci')->name('backend_Asci');
+Route::post('/master/departement/backend_Asci_update', 'admin\master\departement\Asci\backend_AsciController@backend_Asci_update')->name('backend_Asci_update');
+
+// Exa
+Route::get('/master/departement/backend_Exa', 'admin\master\departement\Exa\backend_ExaController@backend_Exa')->name('backend_Exa');
+Route::post('/master/departement/backend_Exa_update', 
+'admin\master\departement\Exa\backend_ExaController@backend_Exa_update')->name('backend_Exa_update');
+
+// SRD
+Route::get('/master/departement/backend_SRD', 'admin\master\departement\SRD\backend_SRDController@backend_SRD')->name('backend_SRD');
+Route::post('/master/departement/backend_SRD_update', 'admin\master\departement\SRD\backend_SRDController@backend_SRD_update')->name('backend_SRD_update');
+
+// Endev
+Route::get('/master/departement/backend_Endev', 'admin\master\departement\Endev\backend_EndevController@backend_Endev')->name('backend_Endev');
+Route::post('/master/departement/backend_Endev_update', 'admin\master\departement\Endev\backend_EndevController@backend_Endev_update')->name('backend_Endev_update');
+
+// Sosdev
+Route::get('/master/departement/backend_Sosdev', 'admin\master\departement\Sosdev\backend_SosdevController@backend_Sosdev')->name('backend_Sosdev');
+Route::post('/master/departement/backend_Sosdev_update', 'admin\master\departement\Sosdev\backend_SosdevController@backend_Sosdev_update')->name('backend_Sosdev_update');
+
+// SAD
+Route::get('/master/departement/backend_SAD', 'admin\master\departement\SAD\backend_SADController@backend_SAD')->name('backend_SAD');
+Route::post('/master/departement/backend_SAD_update', 'admin\master\departement\SAD\backend_SADController@backend_SAD_update')->name('backend_SAD_update');
 
 Route::get('/home', 'HomeController@index')->name('home');

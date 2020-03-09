@@ -72,16 +72,16 @@
                         <span>Department</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#">Medfo</a></li>
-                        <li><a href="#">SW</a></li>
-                        <li><a href="#">GA</a></li>
-                        <li><a href="#">Inaf</a></li>
-                        <li><a href="#">Asci</a></li>
-                        <li><a href="#">Exa</a></li>
-                        <li><a href="#">SRD</a></li>
-                        <li><a href="#">Endev</a></li>
-                        <li><a href="#">Sosdev</a></li>
-                        <li><a href="#">SAD</a></li>
+                        <li><a href="{{route('backend_medfo')}}">Medfo</a></li>
+                        <li><a href="{{route('backend_SW')}}">SW</a></li>
+                        <li><a href="{{route('backend_GA')}}">GA</a></li>
+                        <li><a href="{{route('backend_Inaf')}}">Inaf</a></li>
+                        <li><a href="{{route('backend_Asci')}}">Asci</a></li>
+                        <li><a href="{{route('backend_Exa')}}">Exa</a></li>
+                        <li><a href="{{route('backend_SRD')}}">SRD</a></li>
+                        <li><a href="{{route('backend_Endev')}}">Endev</a></li>
+                        <li><a href="{{route('backend_Sosdev')}}">Sosdev</a></li>
+                        <li><a href="{{route('backend_SAD')}}">SAD</a></li>
                     </ul>
                 </li>
 

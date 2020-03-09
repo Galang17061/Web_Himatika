@@ -48,7 +48,7 @@ class post_imageController extends Controller
     {
         // return $req->file('image');
         $this->validate($req,[
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:7000',
+            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000',
         ]);
 
         DB::beginTransaction();

@@ -9,6 +9,7 @@ use App\model\master\m_category_post;
 use App\model\master\m_category_keprofesian;
 use App\model\master\m_category_olimpiade;
 use App\model\master\m_category_berita_terkini;
+use App\model\master\m_departement_detail;
 use App\model\main\beasiswa\d_beasiswa_image;
 use App\model\main\beasiswa\d_beasiswa_detail;
 use App\model\main\post\d_post_image;
@@ -20,6 +21,7 @@ use App\model\main\berita_terkini\d_berita_terkini_detail;
 use App\model\main\keprofesian\d_keprofesian_image;
 use App\model\main\keprofesian\d_keprofesian_detail;
 use App\model\frontend\post\f_post;
+use App\model\frontend\departement\f_departement;
 
 class models extends model
 {
@@ -106,6 +108,16 @@ class models extends model
     public function f_post(){
         $f_post = new f_post();
         return $f_post;
+    }
+
+    public function f_departement(){
+        $f_departement = new f_departement();
+        return $f_departement;
+    }
+
+    public function m_departement_detail(){
+        $m_departement_detail = new m_departement_detail();
+        return $m_departement_detail;
     }
 
 }

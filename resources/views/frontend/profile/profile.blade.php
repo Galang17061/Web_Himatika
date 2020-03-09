@@ -173,163 +173,23 @@
 <div class="site-section bg-light">
     <div class="container">
         <div class="row">
-            
+            @foreach($data as $element)
             <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="">
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="{{route('profile_single')}}">
-                                <img src="{{asset('../assets_frontend/main/hima/Sosdev_190511_0025-1024x683.jpg')}}">
+                            <a href="{{route('profile_single',[$element->mdd_id])}}">
+                                <img src="{{url(Storage::url('images/departement/'.$element->mdd_image_profile))}}">
                             </a>
                         </span>
                     </div>
-                    <h3 class="mb-3">Social Development</h3>
+                    <h3 class="mb-3">{{$element->mdd_name}}</h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
+                        {{$element->mdd_description}}
                     </p>
                 </div>
             </div>
-
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/Medfo_190511_0004-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">Media and Information</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/Inaf_190511_0006-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">Internal Affair</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/SRD_190511_0005-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">Student Resource Development</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/SW_190511_0001-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">Student Walfare</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/ASCI_190511_0005-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">Applied Science</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/Endev_190511_0005-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">Entrepeneur Development</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/EXA_190511_0032-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">External Affair</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4 text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="block__35630">
-                    <div class="icon mb-3">
-                        <span>
-                            <a href="#">
-                                <img src="{{asset('../assets_frontend/main/hima/GA_190511_0021-1024x683.jpg')}}">
-                            </a>
-                        </span>
-                    </div>
-                    <h3 class="mb-3 ">GA</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur dolores voluptas
-                        obcaecati quo
-                        consequuntur mollitia facilis.
-                    </p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

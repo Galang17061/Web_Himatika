@@ -6,7 +6,6 @@ namespace App\Http\Controllers\frontend\post;
 use App\models;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class postController extends Controller
 {
