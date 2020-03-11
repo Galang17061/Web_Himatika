@@ -15,7 +15,3 @@
 {{-- Font awesome --}}
 
 <script src="{{asset('../assets_frontend/main/fontawesome/js/all.js')}}"></script>
-
-{{-- Leaflet --}}
-
-{{-- <script src="{{asset('../node_modules/leaflet/dist/leaflet.js')}}"></script> --}}
