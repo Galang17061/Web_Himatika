@@ -51,6 +51,7 @@
                                             <th>Kategori</th>
                                             <th>Nama Post</th>
                                             <th>Gambar</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -64,15 +65,15 @@
                                                 {{$element->dpi_category}}
                                             </td>
                                             <td>
-                                                {{$element->d_post_detail->dpd_title}}
+                                                {{$element->dpd_title}}
                                             </td>
                                             <td>
                                                 <?php $image_path = Storage::url('images/post/'.$element->dpi_image) ?>
                                             <img src="{{url($image_path)}}" alt="{{$element->dpi_image}}" style="height: 100px;width: 100px">
                                             </td>
                                             <td>
-                                                <button class="btn btn-sm btn-warning"> Edit</button>
-                                                <button class="btn btn-sm btn-danger" id="alert-confirm"> Delete</button>
+                                                <button class="btn btn-sm btn-warning" onclick="edit({{$element->dpi_id}})"> Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleted({{$element->dpi_id}})"> Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -99,19 +100,12 @@
 
 @section('extra_script')
 <script>
-    $('#datatable').dataTable();
+    function edit(argument) {
+        window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/post_image/edit?&id='+argument;
+    }
 
-$(function () {
-        $("#alert-confirm").click(function () {
-            var a = $(this).val()
-            alertify.confirm("Apakah yakin ingin menghapus?", function () {
-                console.log(a)
-                // window.location.href = baseUrl+'/main/post_detail/delete?&id='.argument
-                alertify.success("Berhasil Menghapus")
-            }, function () {
-                alertify.error("Dibatalkan")
-            })
-        })
-    });
+    function deleted(argument){
+        window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/post_image/delete?&id='+argument;
+    }
 </script>
 @endsection

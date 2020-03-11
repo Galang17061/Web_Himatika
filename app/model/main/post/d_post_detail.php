@@ -18,7 +18,6 @@ class d_post_detail extends model
                             'dpd_category',
                             'dpd_title',
                             'dpd_description',
-                            'dpd_created_at'
                           ];
 
     public function getDateFormat()
@@ -27,7 +26,7 @@ class d_post_detail extends model
     } 
 
     public function m_category_post(){
-      return $this->belongsTo('App\model\master\m_category_post','dpd_id','mcp_id');
+      return $this->belongsTo('App\model\master\m_category_post','dpd_category','mcp_id');
     }
 
     public function d_post_image(){

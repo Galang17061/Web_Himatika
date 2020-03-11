@@ -178,7 +178,7 @@
                 <div class="block__35630">
                     <div class="icon mb-3">
                         <span>
-                            <a href="{{route('profile_single',[$element->mdd_id])}}">
+                            <a href="{{route('profile_single',['id'=>$element->mdd_id])}}">
                                 <img src="{{url(Storage::url('images/departement/'.$element->mdd_image_profile))}}">
                             </a>
                         </span>

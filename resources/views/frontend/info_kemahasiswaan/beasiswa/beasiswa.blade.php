@@ -1,160 +1,141 @@
-@extends('layouts.layouts_frontend._main')
+<?php
+// Taking date from each post
+$date = array();
+$month = array();
+$dummy= array();
+$dummy2= array();
+for($i = 0; $i < count($d_post_detail); $i++){
+    $dummy[$i] = str_replace(' ','-',$d_post_detail[$i]['dpd_created_at']);
+    $dummy2[$i] = str_replace(':','-',$dummy[$i]);
+    $date[$i] = explode('-',$dummy2[$i]);
+}
+?>
 
+@extends('layouts.layouts_post._main')
 @section('content')
-<section class="section-side-image clearfix">
-                    <div class="img-holder col-md-12 col-sm-12 col-xs-12">
-                        <div class="background-imgholder" style="background:url(http://via.placeholder.com/1500x1000);">
-                            <img class="nodisplay-image" src="http://via.placeholder.com/1500x1000" alt="" /> </div>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 clearfix nopadding">
-                                <div class="header-inner less-height">
-                                    <div class="overlay">
-                                        <div class="text text-center">
-                                            <h3 class="uppercase text-white less-mar-1 title">Blog Thumbnail Full Width
-                                            </h3>
-                                            <h6 class="uppercase text-white sub-title">Get Many More Features</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <h2>Our Post</h2>
+                </div>
+                <div class="page_link">
+                    <a href="
+                    {{route('index')}}
+                    ">Home</a>
+                    <a href="
+                    {{route('post')}}
+                    ">Post</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="blog_area area-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    @foreach($d_post_image as $element)
+                    <article class="blog_item">
+                        <div class="blog_item_img">
+                            <img class="card-img rounded-0"
+                                src="
+                                {{url(Storage::url('images/post/'.$element->dpi_image))}}
+                                "
+                                alt="
+                                {{$element->dpi_image}}
+                                ">
+                            <a href="
+                            {{route('post_single',[$element->dpi_id])}}
+                            " class="blog_item_date">
+                                <h3>
+                                    {{$date[$element->dpi_id-1][2]}}
+                                </h3>
+                                <p>
+                                    <?php
+                                        $month = date("F", mktime(0, 0, 0, $date[$element->dpi_id-1][1], 10));
+                                        print($month);
+                                    ?>
+                                </p>
+                            </a>
                         </div>
-                    </div>
-                </section>
-                <div class=" clearfix"></div>
-                <!--end header section -->
 
-                <section>
-                    <div class="pagenation-holder">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4 class="uppercase">Blog Thumbnail Full Width</h4>
-                                </div>
-                                <div class="col-md-6">
-                                    <ol class="breadcrumb">
-                                    <li><a href="{{route('index')}}">Home</a></li>
-                                        <li class="current"><a href="{{route('beasiswa')}}">Beasiswa</a></li>
-                                    </ol>
-                                </div>
-                            </div>
+                        <div class="blog_details">
+                            <a class="d-inline-block" href="
+                            {{route('post_single',[$element->dpi_id])}}
+                            ">
+                                <h2>
+                                    {{($element->d_post_detail->dpd_title)}}
+                                </h2>
+                            </a>
+                            <p>
+                                {!! $element->d_post_detail->dpd_description !!}
+                            </p>
+                            <ul class="blog-info-link">
+                                <li>
+                                    <a href="
+                                    {{route('post_single',[$element->dpi_id])}}
+                                    ">
+                                        <i class="far fa-user"></i>
+                                        {{$element->m_category_post->mcp_title}}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
+                    </article>
+                    @endforeach
+
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                {{$d_post_image->links()}}
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+
+            {{-- <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Category</h4>
+                        <ul class="list cat-list">
+                            @foreach($m_category_post as $element)
+                            <li>
+                                <a href="{{route('post_single',[$element->mcp_id])}}" class="d-flex">
+            <p>{{$element->mcp_title}}</p>
+            <p>()</p>
+            </a>
+            </li>
+            @endforeach
+            </ul>
+            </aside>
+
+            <aside class="single_sidebar_widget popular_post_widget">
+                <h3 class="widget_title">Recent Post</h3>
+                @foreach($d_post_image as $element)
+                <div class="media post_item">
+                    <img src="{{url($image_path)}}" alt="post" style="width: 100px;height:100px">
+                    <div class="media-body">
+                        <a href="{{route('post_single',[$element->dpi_id])}}">
+                            <h3>{{$element->d_post_detail->dpd_title}}</h3>
+                        </a>
+                        <p>{{$date[$element->dpi_id-2][0]}} {{$date[$element->dpi_id-2][1]}}
+                            {{$date[$element->dpi_id-2][2]}}</p>
                     </div>
-                </section>
-                <div class="clearfix"></div>
-                <!--end section-->
+                </div>
+                @endforeach
+            </aside>
 
-                <section class="sec-padding section-light">
-                    <div class="container-fluid">
-                        <div class="row slide-controls-2">
+        </div>
+    </div> --}}
+    </div>
+    </div>
+</section>
 
-                            <div class="col-md-10 col-centered">
-
-
-
-                                <div class="ce-featurebox-16">
-                                    <div class="col-md-5 col-sm-12 col-xs-12 margin-bottom"> <img
-                                            src="http://via.placeholder.com/2000x1000" alt="" class="img-responsive" />
-                                    </div>
-                                    <!--end item-->
-
-                                    <div class="col-md-7 col-sm-12 col-xs-12">
-                                        <h4 class="uppercase title"><a href="#">Aliquam ornare hendrerit augue Cras
-                                                tellus In pulvinar lectus a est Curabitur eget orci</a></h4>
-                                        <div class="blog-post-info"><span><i class="fa fa-comments-o"></i> 15
-                                                Comments</span> <span><i class="fa fa-folder"></i> Business/agro</span>
-                                        </div>
-                                        <br />
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit Suspendisse et justo
-                                            Praesent mattis commodo augue Aliquam ornare hendrerit augue Cras tellus In
-                                            pulvinar lectus a est Curabitur eget orci Cras laoreet ligula Etiam sit amet
-                                            dolor Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-                                            posuere.</p>
-                                        <br />
-                                        <a class="btn btn-dark-3 btn-small" href="#">Read more</a>
-                                    </div>
-                                    <!--end item-->
-                                </div>
-                                <!--end feature box-->
-
-                                <div class="clearfix"></div>
-                                <div class="col-divider-margin-4"></div>
-
-                                <div class="ce-featurebox-16">
-                                    <div class="col-md-5 col-sm-12 col-xs-12 margin-bottom"> <img
-                                            src="http://via.placeholder.com/2000x1000" alt="" class="img-responsive" />
-                                    </div>
-                                    <!--end item-->
-
-                                    <div class="col-md-7 col-sm-12 col-xs-12">
-                                        <h4 class="uppercase title"><a href="#">Aliquam ornare hendrerit augue Cras
-                                                tellus In pulvinar lectus a est Curabitur eget orci</a></h4>
-                                        <div class="blog-post-info"><span><i class="fa fa-comments-o"></i> 15
-                                                Comments</span> <span><i class="fa fa-folder"></i> Business/agro</span>
-                                        </div>
-                                        <br />
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit Suspendisse et justo
-                                            Praesent mattis commodo augue Aliquam ornare hendrerit augue Cras tellus In
-                                            pulvinar lectus a est Curabitur eget orci Cras laoreet ligula Etiam sit amet
-                                            dolor Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-                                            posuere.</p>
-                                        <br />
-                                        <a class="btn btn-dark-3 btn-small" href="#">Read more</a>
-                                    </div>
-                                    <!--end item-->
-                                </div>
-                                <!--end feature box-->
-
-
-                                <div class="ce-featurebox-16">
-                                    <div class="col-md-5 col-sm-12 col-xs-12 margin-bottom"> <img
-                                            src="http://via.placeholder.com/2000x1000" alt="" class="img-responsive" />
-                                    </div>
-                                    <!--end item-->
-
-                                    <div class="col-md-7 col-sm-12 col-xs-12">
-                                        <h4 class="uppercase title"><a href="#">Aliquam ornare hendrerit augue Cras
-                                                tellus In pulvinar lectus a est Curabitur eget orci</a></h4>
-                                        <div class="blog-post-info"><span><i class="fa fa-comments-o"></i> 15
-                                                Comments</span> <span><i class="fa fa-folder"></i> Business/agro</span>
-                                        </div>
-                                        <br />
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit Suspendisse et justo
-                                            Praesent mattis commodo augue Aliquam ornare hendrerit augue Cras tellus In
-                                            pulvinar lectus a est Curabitur eget orci Cras laoreet ligula Etiam sit amet
-                                            dolor Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-                                            posuere.</p>
-                                        <br />
-                                        <a class="btn btn-dark-3 btn-small" href="#">Read more</a>
-                                    </div>
-                                    <!--end item-->
-                                </div>
-                                <!--end feature box-->
-
-
-                            </div>
-                            <!--end item-->
-
-
-                            <div class="clearfix"></div>
-                            <br />
-                            <div class=" divider-line solid light"></div>
-                            <div class="col-md-12">
-                                <ul class="blog-pagenation">
-                                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a class="active" href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                </ul>
-                            </div>
-                            <!--end pagenation-->
-
-
-                        </div>
-                    </div>
-                </section>
-                <div class="clearfix"></div>
-                <!-- end section -->
 @endsection

@@ -36,23 +36,18 @@ for($i = 0; $i < count($d_post_detail); $i++){
             <div class="col-lg-8 mb-5 mb-lg-0">
                 <div class="blog_left_sidebar">
                     @foreach($d_post_image as $element)
-                    <?php $image_path = Storage::url('images/post/'.$element->dpi_image);?>
                     <article class="blog_item">
                         <div class="blog_item_img">
-                        <img class="card-img rounded-0" src="{{url($image_path)}}" alt="{{$element->dpi_image}}">
+                            <img class="card-img rounded-0"
+                                src="{{url(Storage::url('images/post/'.$element->dpi_image))}}"
+                                alt="{{$element->dpi_image}}">
                             <a href="{{route('post_single',[$element->dpi_id])}}" class="blog_item_date">
-                                {{-- Convert timestamp by part --}}
-
                                 <h3>
-                                    <?php
-                                    $index = $element->dpi_id;
-                                    print($date[$index-1][2]);
-                                    ?>
+                                    {{$date[$element->dpi_id-1][2]}}
                                 </h3>
                                 <p>
                                     <?php
-                                        $index = $element->dpi_id;
-                                        $month = date("F", mktime(0, 0, 0, $date[$index-1][1], 10));
+                                        $month = date("F", mktime(0, 0, 0, $date[$element->dpi_id-1][1], 10));
                                         print($month);
                                     ?>
                                 </p>
@@ -61,17 +56,20 @@ for($i = 0; $i < count($d_post_detail); $i++){
 
                         <div class="blog_details">
                             <a class="d-inline-block" href="{{route('post_single',[$element->dpi_id])}}">
-                                <h2>{{($element->dpi_title)}}</h2>
+                                <h2>
+                                    {{($element->d_post_detail->dpd_title)}}
+                                </h2>
                             </a>
                             <p>
                                 {!! $element->d_post_detail->dpd_description !!}
-                                {{-- {{substr($element->d_post_detail->dpd_description,3,(strlen($element->d_post_detail->dpd_description)-7))}} --}}
                             </p>
                             <ul class="blog-info-link">
-                                <li><a href="{{route('post_single',[$element->dpi_id])}}"><i
-                                            class="far fa-user"></i>{{$element->d_post_detail->m_category_post['mcp_title']}}</a>
+                                <li>
+                                    <a href="{{route('post_single',[$element->dpi_id])}}">
+                                        <i class="far fa-user"></i>
+                                        {{$element->m_category_post->mcp_title}}
+                                    </a>
                                 </li>
-                                <li><a href="{{route('post_single',[$element->dpi_id])}}"><i class="far fa-comments"></i> 03 Comments</a></li>
                             </ul>
                         </div>
                     </article>
@@ -80,27 +78,15 @@ for($i = 0; $i < count($d_post_detail); $i++){
                     <nav class="blog-pagination justify-content-center d-flex">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Previous">
-                                    <i class="ti-angle-left"></i>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">1</a>
-                            </li>
-                            <li class="page-item active">
-                                <a href="#" class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Next">
-                                    <i class="ti-angle-right"></i>
-                                </a>
+                                {{$d_post_image->links()}}
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
+            
 
-            <div class="col-lg-4">
+            {{-- <div class="col-lg-4">
                 <div class="blog_right_sidebar">
                     <aside class="single_sidebar_widget post_category_widget">
                         <h4 class="widget_title">Category</h4>
@@ -108,34 +94,33 @@ for($i = 0; $i < count($d_post_detail); $i++){
                             @foreach($m_category_post as $element)
                             <li>
                                 <a href="{{route('post_single',[$element->mcp_id])}}" class="d-flex">
-                                    <p>{{$element->mcp_title}}</p>
-                                    <p>()</p>
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </aside>
+            <p>{{$element->mcp_title}}</p>
+            <p>()</p>
+            </a>
+            </li>
+            @endforeach
+            </ul>
+            </aside>
 
-                    <aside class="single_sidebar_widget popular_post_widget">
-                        <h3 class="widget_title">Recent Post</h3>
-                        @foreach($d_post_image as $element)
-                        <?php $image_path = Storage::url('images/post/'.$element->dpi_image);?>
-                        <div class="media post_item">
-                            <img src="{{url($image_path)}}" alt="post" style="width: 100px;height:100px">
-                            <div class="media-body">
-                                <a href="{{route('post_single',[$element->dpi_id])}}">
-                                    <h3>{{$element->d_post_detail->dpd_title}}</h3>
-                                </a>
-                                <p>{{$date[$element->dpi_id-1][0]}} {{$date[$element->dpi_id-1][1]}}
-                                    {{$date[$element->dpi_id-1][2]}}</p>
-                            </div>
-                        </div>
-                        @endforeach
-                    </aside>
-
+            <aside class="single_sidebar_widget popular_post_widget">
+                <h3 class="widget_title">Recent Post</h3>
+                @foreach($d_post_image as $element)
+                <div class="media post_item">
+                    <img src="{{url($image_path)}}" alt="post" style="width: 100px;height:100px">
+                    <div class="media-body">
+                        <a href="{{route('post_single',[$element->dpi_id])}}">
+                            <h3>{{$element->d_post_detail->dpd_title}}</h3>
+                        </a>
+                        <p>{{$date[$element->dpi_id-2][0]}} {{$date[$element->dpi_id-2][1]}}
+                            {{$date[$element->dpi_id-2][2]}}</p>
+                    </div>
                 </div>
-            </div>
+                @endforeach
+            </aside>
+
         </div>
+    </div> --}}
+    </div>
     </div>
 </section>
 

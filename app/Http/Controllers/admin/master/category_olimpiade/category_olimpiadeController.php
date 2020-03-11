@@ -27,50 +27,43 @@ class category_olimpiadeController extends Controller
     }
     public function category_olimpiade_save(Request $req)
     {
-        // return $req->all();
         DB::beginTransaction();
         try{
-            $id = $this->model->d_category_olimpiade()->max('mcp_id')+1;
+            $id = $this->model->m_category_olimpiade()->max('mco_id')+1;
 
             // Save
-            $simpan = $this->model->d_category_olimpiade()->create([
-                'mcp_id'=>$id,
-                'mcp_title'=>$req->mcp_title,
+            $simpan = $this->model->m_category_olimpiade()->create([
+                'mco_id'=>$id,
+                'mco_title'=>$req->mco_title,
                 'created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/master/category_olimpiade');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('/master/category_olimpiade');
         }
     }
 
-    public function category_olimpiade_edit($id){
+    public function category_olimpiade_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_category_olimpiade()->get()->where('mcp_id',$id);
+        $data = $this->model->m_category_olimpiade()->get()->where('mco_id',$req->id);
         return view('admin.master.category_olimpiade.category_olimpiade_edit',compact('data'));
     }
 
     public function category_olimpiade_update(Request $req)
     {
-        $simpan = $this->model->d_category_olimpiade()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
+        $simpan = $this->model->m_category_olimpiade()->where('mco_id',$req->mco_id)->update([
+            'mco_title'=>$req->mco_title
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcp_id;
+        return redirect('/master/category_olimpiade');
     }
 
-    public function category_olimpiade_delete($id)
+    public function category_olimpiade_delete(Request $req)
     {
-        // $data = $this->model->m_category_olimpiade()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_category_olimpiade()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
+        $delete = $this->model->m_category_olimpiade()->where('mco_id',$req->id)->delete();
+        return redirect('/master/category_olimpiade');
     }
     public function category_olimpiade_datatable()
     {

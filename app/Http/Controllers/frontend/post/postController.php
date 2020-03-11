@@ -6,6 +6,7 @@ namespace App\Http\Controllers\frontend\post;
 use App\models;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class postController extends Controller
 {
@@ -17,10 +18,9 @@ class postController extends Controller
 
     public function post()
     {
-        $m_category_post = $this->model->m_category_post()->get()->all();
-        $d_post_detail = $this->model->d_post_detail()->get()->all();
-        $d_post_image = $this->model->d_post_image()->get()->all();
-        return view('frontend.post.post',compact('m_category_post','d_post_detail','d_post_image'));
+        $d_post_detail = $this->model->d_post_detail()->get();
+        $d_post_image = $this->model->d_post_image()->orderByDesc('dpi_id')->with('d_post_detail')->paginate(5);
+        return view('frontend.post.post',compact('d_post_detail','d_post_image'));
     }
 
     public function post_single(Request $req){

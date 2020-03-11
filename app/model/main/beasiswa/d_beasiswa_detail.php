@@ -18,12 +18,19 @@ class d_beasiswa_detail extends model
                             'dbd_category',
                             'dbd_title',
                             'dbd_description',
-                            'dbd_created_at'
                           ];
 
     public function getDateFormat()
     {
       return 'Y-m-d H:i:s';
     } 
+
+    public function m_category_beasiswa(){
+      return $this->belongsTo('App\model\master\m_category_beasiswa','dbd_category','mcb_id');
+    }
+
+    public function d_beasiswa_image(){
+      return $this->hasMany('App\model\main\beasiswa\d_beasiswa_image','dbi_id','dbd_id');
+    }
 
 }

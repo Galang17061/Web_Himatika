@@ -11,10 +11,6 @@
         <div class="site-mobile-menu-body"></div>
     </div>
 
-
-
-
-
     <div class="site-section-cover overlay img-bg-section"
         style="background-image: url({{asset('../assets_frontend/main/images/hero_3.jpg')}});">
         <div class="container">
@@ -54,33 +50,28 @@
                 </div>
             </div>
             <div class="row">
+                @foreach($data as $element)
                 <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="">
                     <div>
-                        <a href="#" class="mb-4 d-block"><img src="{{asset('../assets_frontend/main/images/hero_2.jpg')}}"
-                                alt="Image" class="img-fluid rounded"></a>
-                        <h2><a href="#">P</a></h2>
-                        <p class="text-muted mb-3 text-uppercase small"><span class="mr-2">January 18, 2019</span>
-                            By <a href="#" class="by">James Cooper</a></p>
-                        <p>Gak Jawab PKI!</p>
-                        <p><a href="#">Read More</a></p>
+                        <a href="#" class="mb-4 d-block"><img
+                                src="" alt="Image"
+                                class="img-fluid rounded">
+                            </a>
+                        <h2>
+                            <a href="#">
+                                {{$element->dpd_title}}
+                            </a>
+                        </h2>
+                        <p class="text-muted mb-3 text-uppercase small">
+                            <span class="mr-2">
+                                {{$element->dpd_created_at}}
+                            </span>
+                        <p>
+                            {{$element->dpd_description}}
+                        </p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                    <div>
-                        <a href="#" class="mb-4 d-block"><img src="{{asset('../assets_frontend/main/images/hero_3.jpg')}}"
-                                alt="Image" class="img-fluid rounded"></a>
-                        <h2><a href="#">Jahannam</a></h2>
-                        <p class="text-muted mb-3 text-uppercase small"><span class="mr-2">January 18, 2019</span>
-                            By <a href="#" class="by">James Cooper</a></p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat et suscipit iste libero
-                            neque.
-                            Vitae quidem ducimus voluptatibus nemo cum odio ab enim nisi, itaque, libero fuga
-                            veritatis culpa
-                            quis!</p>
-                        <p><a href="#">Read More</a></p>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
         </div>
     </div>

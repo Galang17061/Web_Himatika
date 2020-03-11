@@ -17,11 +17,7 @@ class post_imageController extends Controller
         $this->middleware('auth');
         $this->model = new models();
     }
-
-    public function tes(Request $param){
-        return $param->all();
-    }
-
+    
     public function post_image()
     {
         $data = $this->model->d_post_image()->with('m_category_post')->with('d_post_detail')->get()->all();
@@ -35,64 +31,67 @@ class post_imageController extends Controller
         return view('admin.main.post.post_image.post_image_create',compact('m_category_post','d_post_detail'));
     }
 
-    public function post_image_return(Request $req)
-    {
-        $this->validate($req,[
-                'dpi_image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:7000',
-            ]);
-
-        return dd($req->all());
-    }
-
     public function post_image_save(Request $req)
     {
-        // return $req->file('image');
         $this->validate($req,[
             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000',
         ]);
 
         DB::beginTransaction();
         try{
-            $id = $this->model->d_post_image()->max('dpi_id')+1;
-
+            if(!empty($this->model->d_post_image()->get('dpi_id'))){
             // Save
             $simpan = $this->model->d_post_image()->create([
-                'dpi_id'=>$id,
+                'dpi_id'=>$this->model->d_post_detail()->get('dpd_id')->where('dpd_id',$req->dpi_title)->pluck('dpd_id')[0],
                 'dpi_category'=>$req->get('dpi_category'),
                 'dpi_title'=>$req->get('dpi_title'),
-                'dpi_image'=>'post_'.$id.'_image'.'.jpg',
+                'dpi_image'=>'post_'.$this->model->d_post_detail()->get('dpd_id')->where('dpd_id',$req->dpi_title)->pluck('dpd_id')[0].'_image'.'.jpg',
             ]);
 
             Storage::putFileAs(
             'public/images/post',
             $req->file('image'),
-            'post_'.$id.'_image'.'.jpg');
+            'post_'.$this->model->d_post_detail()->get('dpd_id')->where('dpd_id',$req->dpi_title)->pluck('dpd_id')[0].'_image'.'.jpg');
 
             DB::commit();
             return redirect('/main/post_image');
+            }
+            else{
+            return redirect('/main/post_image');
+        }
         }
         catch(\Exception $e){
             DB::rollback();
-            return redirect()->back()->withError('Sukses');
+            print($e);
+            // return redirect('/main/post_image');
         }
     }
 
-    public function post_image_edit($id){
+    public function post_image_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_post_image()->get()->where('dpi_id',$id);
-        return view('admin.master.post_image.post_image_edit',compact('data'));
+        $data = $this->model->d_post_image()->where('dpi_id',$req->id)->get()->first();
+        return view('admin.main.post.post_image.post_image_edit',compact('data'));
     }
 
     public function post_image_update(Request $req)
     {
-        $simpan = $this->model->d_post_image()->where('dpi_id',$req->dpi_id)->update([
-            'dpi_title'=>$req->dpi_title
-        ]);
-        return Response()->json(['status'=>'sukses']);
+        if(!empty($req->file('image'))){
+            Storage::putFileAs(
+                'public/images/post',
+                $req->file('image'),
+                'post_'.$req->dpi_id.'_image.jpg');
+                return redirect('/main/post_image');
+        }
+        else{
+            return redirect('/main/post_image');
+        }
     }
     
-    public function post_image_delete($id)
+    public function post_image_delete(Request $req)
     {
+        unlink(storage_path('app/public/images/post/post_'.$req->id.'_image.jpg'));
+        $delete =$this->model->d_post_image()->where('dpi_id',$req->id)->delete();
+        return redirect('/main/post_image');
     }
     public function post_image_datatable()
     {

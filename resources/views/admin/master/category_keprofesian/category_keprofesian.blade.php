@@ -11,10 +11,10 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h4 class="page-title mb-1">Master User</h4>
+                        <h4 class="page-title mb-1">Master Keprofesian</h4>
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Master</a></li>
-                            <li class="breadcrumb-item active">Master User</li>
+                            <li class="breadcrumb-item active">Master Keprofesian</li>
                         </ol>
                     </div>
                     <div class="col-md-4">
@@ -63,10 +63,8 @@
                                                 {{$element->mck_title}}
                                             </td>
                                             <td>
-                                            <a href="#">
-                                                <button class="btn btn-sm btn-warning"> Edit</button>
-                                            </a>
-                                                <button class="btn btn-sm btn-danger"> Delete</button>
+                                                <button class="btn btn-sm btn-warning" onclick="edit({{$element->mck_id}})"> Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleted({{$element->mck_id}})"> Delete</button>
                                                 
                                             </td>
                                         </tr>
@@ -96,6 +94,12 @@
 <script>
     $('#datatable').dataTable();
 
+function edit(argument){
+    window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/master/category_keprofesian/edit?&id='+argument
+}
 
+function deleted(argument){
+    window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/master/category_keprofesian/delete?&id='+argument
+}
 </script>
 @endsection

@@ -21,4 +21,9 @@ class profileController extends Controller
         $data = $this->model->m_departement_detail()->get()->all();
         return view('frontend.profile.profile',compact('data'));
     }
+
+    public function profile_single(Request $req){
+        $data = $this->model->m_departement_detail()->where('mdd_id',$req->id)->get()->first();
+        return view('frontend.profile.profile_single',compact('data'));
+    }
 }

@@ -27,7 +27,6 @@ class category_berita_terkiniController extends Controller
     }
     public function category_berita_terkini_save(Request $req)
     {
-        // return $req->all();
         DB::beginTransaction();
         try{
             $id = $this->model->m_category_berita_terkini()->max('mcbt_id')+1;
@@ -36,20 +35,19 @@ class category_berita_terkiniController extends Controller
             $simpan = $this->model->m_category_berita_terkini()->create([
                 'mcbt_id'=>$id,
                 'mcbt_title'=>$req->mcbt_title,
-                'created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('master/category_berita_terkini');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('master/category_berita_terkini');
         }
     }
 
-    public function category_berita_terkini_edit($id){
+    public function category_berita_terkini_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->m_category_berita_terkini()->get()->where('mcbt_id',$id);
+        $data = $this->model->m_category_berita_terkini()->get()->where('mcbt_id',$req->id);
         return view('admin.master.category_berita_terkini.category_berita_terkini_edit',compact('data'));
     }
 
@@ -58,22 +56,12 @@ class category_berita_terkiniController extends Controller
         $simpan = $this->model->m_category_berita_terkini()->where('mcbt_id',$req->mcbt_id)->update([
             'mcbt_title'=>$req->mcbt_title
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcbt_id;
+        return redirect('master/category_berita_terkini');
     }
 
-    public function category_berita_terkini_delete($id)
+    public function category_berita_terkini_delete(Request $req)
     {
-        // $data = $this->model->m_category_berita_terkini()->get()->where('mcbt_id',$id);
-        // $update = $data = $this->model->m_category_berita_terkini()->get()->where('mcbt_id',$id)->update([
-        //     'mcbt_title'=>$id->mcbt_title
-        // ]);
-    }
-    public function category_berita_terkini_datatable()
-    {
-        return ('e');
+        $delete = $this->model->m_category_berita_terkini()->where('mcbt_id',$req->id)->delete();
+        return redirect('/master/category_berita_terkini');
     }
 }

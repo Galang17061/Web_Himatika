@@ -23,4 +23,12 @@ class m_category_beasiswa extends model
       return 'Y-m-d H:i:s';
     } 
 
+    public function d_beasiswa_detail(){
+      return $this->hasMany('App\model\main\beasiswa\d_beasiswa_detail','dbd_category','mcb_id');
+    }
+
+    public function d_beasiswa_image(){
+      return $this->hasMany('App\model\main\beasiswa\d_beasiswa_image','dbi_category','mcb_id');
+    }
+
 }

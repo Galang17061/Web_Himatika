@@ -1,5 +1,6 @@
 @extends('layouts.layouts_admin._main')
 
+
 @section('content')
 
 <div class="main-content">
@@ -30,13 +31,19 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form_save">
+                                <form method="post" enctype="multipart/form-data"
+                                    action="{{route('beasiswa_detail_save')}}">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="example-text-input" class="col-md-2 col-form-label">Kategory</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="text" name="dbd_category" value=""
-                                                id="example-text-input">
+                                            <select class="form-control" name="dbd_category" id="dpd_category">
+                                                @foreach($m_category_beasiswa as $element)
+                                                <option value="{{$element->mcb_id}}">
+                                                    {{$element->mcb_title}}
+                                                </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -48,16 +55,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="example-text-input"
-                                            class="col-md-2 col-form-label">Deskripsi</label>
+                                        <label for="example-text-input" class="col-md-2 col-form-label">Isi
+                                            Beasiswa</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="text" name="dbd_description" value=""
-                                                id="example-text-input">
+                                            <textarea id="elm1" name="dbd_description"></textarea>
                                         </div>
                                     </div>
                                     <div class="mt-4">
-                                        <button class="btn btn-primary waves-effect waves-light" type="button"
-                                            onclick="save()">Submit</button>
+                                        <button class="btn btn-primary waves-effect waves-light"
+                                            type="submit">Submit</button>
                                     </div>
 
                                 </form>
@@ -76,47 +82,4 @@
 
 </div>
 
-@endsection
-
-@section('extra_script')
-<script>
-    $('.dropify').dropify();
-
-   function save(argument) {
-        var form   = $('.form_save');
-        formdata = new FormData(form[0]);
-        $.ajaxSetup({
-           headers: {
-             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           }
-        });
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Save!'
-        }).then((result) => {
-            $.ajax({
-                type: "post",
-                url:"{{ route('beasiswa_detail_save') }}",
-                data: formdata ? formdata : form.serialize(),
-                processData: false,
-                contentType: false,
-                success:function(data){
-                    if (data.status == 'sukses') {
-                        if (result.value) {Swal.fire('Saved!','Your file has been Saved.','success')}
-                    }else if(data.status == 'gagal'){
-                        if (result.value) {Swal.fire('Fail!','your file could not be saved','error')}
-                    }
-                }
-            });
-            
-        })
-        
-    }
-
-</script>
 @endsection

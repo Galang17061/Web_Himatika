@@ -11,9 +11,10 @@
 |
  */
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/','IndexController@index')->name('index');
+
+Route::get('/home', 'HomeController@home')->name('home');
+
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -28,7 +29,7 @@ Auth::routes();
 // Beasiswa detail
 Route::get('/main/beasiswa_detail', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail')->name('beasiswa_detail');
 Route::get('/main/beasiswa_detail/create', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_create')->name('beasiswa_detail_create');
-Route::get('/main/beasiswa_detail/edit/{id}', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_edit')->name('beasiswa_detail_edit/{id}');
+Route::get('/main/beasiswa_detail/edit', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_edit')->name('beasiswa_detail_edit');
 Route::post('/main/beasiswa_detail/save', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_save')->name('beasiswa_detail_save');
 Route::post('/main/beasiswa_detail/update', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_update')->name('beasiswa_detail_update');
 Route::get('/main/beasiswa_detail/delete', 'admin\main\beasiswa\beasiswa_detailController@beasiswa_detail_delete')->name('beasiswa_detail_delete');
@@ -37,7 +38,7 @@ Route::get('/main/beasiswa_detail/datatable', 'admin\main\beasiswa\beasiswa_deta
 // Beasiswa image
 Route::get('/main/beasiswa_image', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image')->name('beasiswa_image');
 Route::get('/main/beasiswa_image/create', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image_create')->name('beasiswa_image_create');
-Route::get('/main/beasiswa_image/edit/{id}', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image_edit')->name('beasiswa_image_edit/{id}');
+Route::get('/main/beasiswa_image/edit', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image_edit')->name('beasiswa_image_edit');
 Route::post('/main/beasiswa_image/save', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image_save')->name('beasiswa_image_save');
 Route::post('/main/beasiswa_image/update', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image_update')->name('beasiswa_image_update');
 Route::get('/main/beasiswa_image/delete', 'admin\main\beasiswa\beasiswa_imageController@beasiswa_image_delete')->name('beasiswa_image_delete');
@@ -109,7 +110,8 @@ Route::get('/main/post_detail/datatable', 'admin\main\post\post_detailController
 // Post Image
 Route::get('/main/post_image', 'admin\main\post\post_imageController@post_image')->name('post_image');
 Route::get('/main/post_image/create', 'admin\main\post\post_imageController@post_image_create')->name('post_image_create');
-Route::get('/main/post_image/edit/{id}', 'admin\main\post\post_imageController@post_image_edit')->name('post_image_edit/{id}');
+Route::get('/main/post_image/edit', 'admin\main\post\post_imageController@post_image_edit')->name('post_image_edit');
+// Route::get('/main/post_image/edit/{id}', 'admin\main\post\post_imageController@post_image_edit')->name('post_image_edit/{id}');
 Route::post('/main/post_image/save', 'admin\main\post\post_imageController@post_image_save')->name('post_image_save');
 Route::post('/main/post_image/update', 'admin\main\post\post_imageController@post_image_update')->name('post_image_update');
 Route::get('/main/post_image/delete', 'admin\main\post\post_imageController@post_image_delete')->name('post_image_delete');
@@ -120,6 +122,7 @@ Route::get('/master/category_beasiswa', 'admin\master\category_beasiswa\category
 Route::get('/master/category_beasiswa/create', 'admin\master\category_beasiswa\category_beasiswaController@category_beasiswa_create')->name('category_beasiswa_create');
 Route::post('/master/category_beasiswa/save', 'admin\master\category_beasiswa\category_beasiswaController@category_beasiswa_save')->name('category_beasiswa_save');
 Route::post('/master/category_beasiswa/update', 'admin\master\category_beasiswa\category_beasiswaController@category_beasiswa_update')->name('category_beasiswa_update');
+Route::get('/master/category_beasiswa/edit', 'admin\master\category_beasiswa\category_beasiswaController@category_beasiswa_edit')->name('category_beasiswa_edit');
 Route::get('/master/category_beasiswa/delete', 'admin\master\category_beasiswa\category_beasiswaController@category_beasiswa_delete')->name('category_beasiswa_delete');
 Route::get('/master/category_beasiswa/datatable', 'admin\master\category_beasiswa\category_beasiswaController@category_beasiswa_datatable')->name('category_beasiswa_datatable');
 
@@ -137,6 +140,7 @@ Route::get('/master/category_berita_terkini', 'admin\master\category_berita_terk
 Route::get('/master/category_berita_terkini/create', 'admin\master\category_berita_terkini\category_berita_terkiniController@category_berita_terkini_create')->name('category_berita_terkini_create');
 Route::post('/master/category_berita_terkini/save', 'admin\master\category_berita_terkini\category_berita_terkiniController@category_berita_terkini_save')->name('category_berita_terkini_save');
 Route::post('/master/category_berita_terkini/update', 'admin\master\category_berita_terkini\category_berita_terkiniController@category_berita_terkini_update')->name('category_berita_terkini_update');
+Route::get('/master/category_berita_terkini/edit', 'admin\master\category_berita_terkini\category_berita_terkiniController@category_berita_terkini_edit')->name('category_berita_terkini_edit');
 Route::get('/master/category_berita_terkini/delete', 'admin\master\category_berita_terkini\category_berita_terkiniController@category_berita_terkini_delete')->name('category_berita_terkini_delete');
 Route::get('/master/category_berita_terkini/datatable', 'admin\master\category_berita_terkini\category_berita_terkiniController@category_berita_terkini_datatable')->name('category_berita_terkini_datatable');
 
@@ -145,6 +149,7 @@ Route::get('/master/category_olimpiade', 'admin\master\category_olimpiade\catego
 Route::get('/master/category_olimpiade/create', 'admin\master\category_olimpiade\category_olimpiadeController@category_olimpiade_create')->name('category_olimpiade_create');
 Route::post('/master/category_olimpiade/save', 'admin\master\category_olimpiade\category_olimpiadeController@category_olimpiade_save')->name('category_olimpiade_save');
 Route::post('/master/category_olimpiade/update', 'admin\master\category_olimpiade\category_olimpiadeController@category_olimpiade_update')->name('category_olimpiade_update');
+Route::get('/master/category_olimpiade/edit', 'admin\master\category_olimpiade\category_olimpiadeController@category_olimpiade_edit')->name('category_olimpiade_edit');
 Route::get('/master/category_olimpiade/delete', 'admin\master\category_olimpiade\category_olimpiadeController@category_olimpiade_delete')->name('category_olimpiade_delete');
 Route::get('/master/category_olimpiade/datatable', 'admin\master\category_olimpiade\category_olimpiadeController@category_olimpiade_datatable')->name('category_olimpiade_datatable');
 
@@ -153,6 +158,7 @@ Route::get('/master/category_keprofesian', 'admin\master\category_keprofesian\ca
 Route::get('/master/category_keprofesian/create', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_create')->name('category_keprofesian_create');
 Route::post('/master/category_keprofesian/save', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_save')->name('category_keprofesian_save');
 Route::post('/master/category_keprofesian/update', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_update')->name('category_keprofesian_update');
+Route::get('/master/category_keprofesian/edit', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_edit')->name('category_keprofesian_edit');
 Route::get('/master/category_keprofesian/delete', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_delete')->name('category_keprofesian_delete');
 Route::get('/master/category_keprofesian/datatable', 'admin\master\category_keprofesian\category_keprofesianController@category_keprofesian_datatable')->name('category_keprofesian_datatable');
 
@@ -160,7 +166,7 @@ Route::get('/master/category_keprofesian/datatable', 'admin\master\category_kepr
 
 // Profile
 Route::get('/frontend/profile', 'frontend\profile\profileController@profile')->name('profile');
-Route::get('/frontend/profile_single', 'frontend\profile_single\profile_singleController@profile_single')->name('profile_single');
+Route::get('/frontend/profile_single', 'frontend\profile\profileController@profile_single')->name('profile_single');
 
 // Post
 Route::get('/frontend/post', 'frontend\post\postController@post')->name('post');
@@ -171,8 +177,8 @@ Route::get('/frontend/contact', 'frontend\contact\contactController@contact')->n
 Route::get('/frontend/contact_single', 'frontend\contact_single\contact_singleController@contact_single')->name('contact_single');
 
 // Beasiswa
-Route::get('/frontend/beasiswa', 'frontend\beasiswa\beasiswaController@beasiswa')->name('beasiswa');
-Route::get('/frontend/beasiswa_single', 'frontend\beasiswa_single\beasiswa_singleController@beasiswa_single')->name('beasiswa_single');
+Route::get('/frontend/beasiswa', 'frontend\info_kemahasiswaan\beasiswa\beasiswaController@beasiswa')->name('beasiswa');
+Route::get('/frontend/beasiswa_single', 'frontend\info_kemahasiswaan\beasiswa_single\beasiswa_singleController@beasiswa_single')->name('beasiswa_single');
 
 // Berita Terkini
 Route::get('/frontend/berita_terkini', 'frontend\berita_terkini\berita_terkiniController@berita_terkini')->name('berita_terkini');
@@ -229,4 +235,16 @@ Route::post('/master/departement/backend_Sosdev_update', 'admin\master\departeme
 Route::get('/master/departement/backend_SAD', 'admin\master\departement\SAD\backend_SADController@backend_SAD')->name('backend_SAD');
 Route::post('/master/departement/backend_SAD_update', 'admin\master\departement\SAD\backend_SADController@backend_SAD_update')->name('backend_SAD_update');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Send mail
+Route::get('send-mail', function () {
+   
+    $details = [
+        'title' => 'Hendry',
+        'body' => 'This is for testing email using smtp'
+    ];
+   
+    \Mail::to('notpenting@gmail.com')->send(new \App\Mail\MyTestMail($details));
+   
+    dd("Email is Sent.");
+})->name('send');
+

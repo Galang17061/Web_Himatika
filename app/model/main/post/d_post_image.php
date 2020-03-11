@@ -26,7 +26,7 @@ class d_post_image extends model
     } 
 
     public function m_category_post(){
-      return $this->belongsTo('App\model\master\m_category_post','dpi_id','mcp_id');
+      return $this->belongsTo('App\model\master\m_category_post','dpi_category','mcp_id');
     }
 
     public function d_post_detail(){

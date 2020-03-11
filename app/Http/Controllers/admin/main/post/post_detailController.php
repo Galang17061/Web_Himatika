@@ -59,7 +59,6 @@ class post_detailController extends Controller
 
     public function post_detail_update(Request $req)
     {
-        // return $req->all();
         $simpan = $this->model->d_post_detail()->where('dpd_id',$req->dpd_id)->update([
             'dpd_title'=>$req->dpd_title,
             'dpd_description'=>$req->dpd_description
@@ -69,12 +68,9 @@ class post_detailController extends Controller
 
     public function post_detail_delete(Request $req)
     {
+        unlink(storage_path('app/public/images/post/post_'.$req->id.'_image.jpg'));
         $delete =$this->model->d_post_detail()->where('dpd_id',$req->id)->delete();
-        $post_image_detele = $this->d_post_image()->where('dpi_id',$req->id)->delete();
+        $post_image_delete = $this->model->d_post_image()->where('dpi_title',$req->id)->delete();
         return redirect('/main/post_detail');
-    }
-    public function post_detail_datatable()
-    {
-        return ('e');
     }
 }

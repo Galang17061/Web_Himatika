@@ -16,14 +16,15 @@ class olimpiade_detailController extends Controller
         $this->model = new models();
     }
 
-    public function olimpiade_detail(Request $data)
+    public function olimpiade_detail(Request $req)
     {
-         $data = $this->model->d_olimpiade_detail()->get();
+        $data = $this->model->d_olimpiade_detail()->get();
         return view('admin.main.olimpiade.olimpiade_detail.olimpiade_detail',compact('data'));
     }
     public function olimpiade_detail_create()
     {
-        return view('admin.main.olimpiade.olimpiade_detail.olimpiade_detail_create');
+        $m_category_olimpiade = $this->model->m_category_olimpiade()->get()->all();
+        return view('admin.main.olimpiade.olimpiade_detail.olimpiade_detail_create',compact('m_category_olimpiade'));
     }
     public function olimpiade_detail_save(Request $req)
     {
@@ -38,44 +39,37 @@ class olimpiade_detailController extends Controller
                 'dod_category'=>$req->dod_category,
                 'dod_title'=>$req->dod_title,
                 'dod_description'=>$req->dod_description,
-                'dod_created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/main/olimpiade_detail');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('/main/olimpiade_detail/create');
         }
     }
 
-    public function olimpiade_detail_edit($id){
+    public function olimpiade_detail_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_olimpiade_detail()->get()->where('mcp_id',$id);
-        return view('admin.master.olimpiade_detail.olimpiade_detail_edit',compact('data'));
+        $data = $this->model->d_olimpiade_detail()->where('dod_id',$req->id)->get()->first();
+        return view('admin.main.olimpiade.olimpiade_detail.olimpiade_detail_edit',compact('data'));
     }
 
     public function olimpiade_detail_update(Request $req)
     {
-        $simpan = $this->model->d_olimpiade_detail()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
+        return $req->all();
+        $simpan = $this->model->d_olimpiade_detail()->where('dod_id',$req->dod_id)->update([
+            'dod_title'=>$req->dod_title,
+            'dod_description'=>$req->dod_description,
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcp_id;
+        return redirect('/main/olimpiade_detail');
     }
 
-    public function olimpiade_detail_delete($id)
+    public function olimpiade_detail_delete(Request $req)
     {
-        // $data = $this->model->m_olimpiade_detail()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_olimpiade_detail()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
-    }
-    public function olimpiade_detail_datatable()
-    {
-        return ('e');
+        // unlink(storage_path('app/public/images/olimpiade/olimpiade_'.$req->id.'_image.jpg'));
+        $delete =$this->model->d_olimpiade_detail()->where('dod_id',$req->id)->delete();
+        $olimpiade_image_delete = $this->model->d_olimpiade_image()->where('doi_title',$req->id)->delete();
+        return redirect('/main/olimpiade_detail');
     }
 }

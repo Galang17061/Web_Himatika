@@ -18,7 +18,7 @@ class category_beasiswaController extends Controller
 
     public function category_beasiswa(Request $data)
     {
-         $data = $this->model->m_category_beasiswa()->get();
+        $data = $this->model->m_category_beasiswa()->with('d_beasiswa_detail','d_beasiswa_image')->get();
         return view('admin.master.category_beasiswa.category_beasiswa',compact('data'));
     }
     public function category_beasiswa_create()
@@ -39,36 +39,30 @@ class category_beasiswaController extends Controller
                 'created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('master/category_beasiswa');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('master/category_beasiswa');
         }
     }
-    public function category_beasiswa_edit($id){
+    public function category_beasiswa_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->m_category_beasiswa()->get()->where('mcp_id',$id);
+        $data = $this->model->m_category_beasiswa()->get()->where('mcb_id',$req->id);
         return view('admin.master.category_beasiswa.category_beasiswa_edit',compact('data'));
     }
 
     public function category_beasiswa_update(Request $req)
     {
-        $simpan = $this->model->m_category_beasiswa()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
+        $simpan = $this->model->m_category_beasiswa()->where('mcb_id',$req->mcb_id)->update([
+            'mcb_title'=>$req->mcb_title
         ]);
-        return Response()->json(['status'=>'sukses']);
+        return redirect('/master/category_beasiswa');
     }
 
-    public function category_beasiswa_delete($id)
+    public function category_beasiswa_delete(Request $req)
     {
-        // $data = $this->model->m_category_beasiswa()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_category_beasiswa()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
-    }
-    public function category_beasiswa_datatable()
-    {
-        return ('e');
+        $delete = $this->model->m_category_beasiswa()->where('mcb_id',$req->id)->delete();
+        return redirect('/master/category_beasiswa');
     }
 }

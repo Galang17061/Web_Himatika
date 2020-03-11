@@ -6,6 +6,8 @@ use App\models;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class beasiswa_imageController extends Controller
 {
@@ -15,67 +17,79 @@ class beasiswa_imageController extends Controller
         $this->middleware('auth');
         $this->model = new models();
     }
-
+    
     public function beasiswa_image()
     {
-        //  $data = $this->model->d_beasiswa_image()->get();
-        return view('admin.main.beasiswa.beasiswa_image.beasiswa_image');
+        $data = $this->model->d_beasiswa_image()->with('m_category_beasiswa')->with('d_beasiswa_detail')->get()->all();
+        return view('admin.main.beasiswa.beasiswa_image.beasiswa_image',compact('data'));
     }
 
     public function beasiswa_image_create()
     {
-        return view('admin.main.beasiswa.beasiswa_image.beasiswa_image_create');
+        $m_category_beasiswa = $this->model->m_category_beasiswa()->get()->all();
+        $d_beasiswa_detail = $this->model->d_beasiswa_detail()->get()->all();
+        return view('admin.main.beasiswa.beasiswa_image.beasiswa_image_create',compact('m_category_beasiswa','d_beasiswa_detail'));
     }
-    
+
     public function beasiswa_image_save(Request $req)
     {
-        // return $req->all();
+        $this->validate($req,[
+            'image'=>'image|mimes:jpeg,png,jpg,gif,svg|max:2000',
+        ]);
+
         DB::beginTransaction();
         try{
-            $id = $this->model->d_beasiswa_image()->max('mcp_id')+1;
-
-            // Save
-            $simpan = $this->model->d_beasiswa_image()->create([
-                'mcp_id'=>$id,
-                'mcp_title'=>$req->mcp_title,
-                'created_at'=>date('Y-m-d h:i:s'),
+            if(!empty($this->model->d_beasiswa_image()->get('dbi_id'))){
+                $delete =$this->model->d_beasiswa_image()->where('dbi_id',$req->dbi_title)->delete();
+                $simpan = $this->model->d_beasiswa_image()->create([
+                'dbi_id'=>$this->model->d_beasiswa_detail()->get('dbd_id')->where('dbd_id',$req->dbi_title)->pluck('dbd_id')[0],
+                'dbi_category'=>$req->get('dbi_category'),
+                'dbi_title'=>$req->get('dbi_title'),
+                'dbi_image'=>'beasiswa_'.$this->model->d_beasiswa_detail()->get('dbd_id')->where('dbd_id',$req->dbi_title)->pluck('dbd_id')[0].'_image'.'.jpg',
             ]);
+
+            Storage::putFileAs(
+            'public/images/info_kemahasiswaan/beasiswa',
+            $req->file('image'),
+            'beasiswa_'.$this->model->d_beasiswa_detail()->get('dbd_id')->where('dbd_id',$req->dbi_title)->pluck('dbd_id')[0].'_image'.'.jpg');
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/main/beasiswa_image');
         }
+        else{
+            return redirect('/main/beasiswa_image');
+        }
+    }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            print($e);
+            // return redirect('/main/beasiswa_image/create');
         }
     }
 
-    public function beasiswa_image_edit($id){
+    public function beasiswa_image_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_beasiswa_image()->get()->where('mcp_id',$id);
-        return view('admin.master.beasiswa_image.beasiswa_image_edit',compact('data'));
+        $data = $this->model->d_beasiswa_image()->where('dbi_id',$req->id)->get()->first();
+        return view('admin.main.beasiswa.beasiswa_image.beasiswa_image_edit',compact('data'));
     }
 
     public function beasiswa_image_update(Request $req)
     {
-        $simpan = $this->model->d_beasiswa_image()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
-        ]);
-        return Response()->json(['status'=>'sukses']);
+        if(!empty($req->file('image'))){
+            Storage::putFileAs(
+                'public/images/info_kemahasiswaan/beasiswa',
+                $req->file('image'),
+                'beasiswa_'.$req->dbi_id.'_image.jpg');
+                return redirect('/main/beasiswa_image');
+        }
+        else{
+            return redirect('/main/beasiswa_image/edit');
+        }
     }
     
-    public function tes(Request $req){
-        return $req->mcp_id;
-    }
-
-    public function beasiswa_image_delete($id)
+    public function beasiswa_image_delete(Request $req)
     {
-        // $data = $this->model->m_beasiswa_image()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_beasiswa_image()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
-    }
-    public function beasiswa_image_datatable()
-    {
-        return ('e');
+        unlink(storage_path('app/public/images/info_kemahasiswaan/beasiswa/beasiswa_'.$req->id.'_image.jpg'));
+        $delete =$this->model->d_beasiswa_image()->where('dbi_id',$req->id)->delete();
+        return redirect('/main/beasiswa_image');
     }
 }

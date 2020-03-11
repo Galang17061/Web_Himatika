@@ -16,14 +16,15 @@ class berita_terkini_detailController extends Controller
         $this->model = new models();
     }
 
-    public function berita_terkini_detail(Request $data)
+    public function berita_terkini_detail(Request $req)
     {
-         $data = $this->model->d_berita_terkini_detail()->get();
+        $data = $this->model->d_berita_terkini_detail()->get();
         return view('admin.main.berita_terkini.berita_terkini_detail.berita_terkini_detail',compact('data'));
     }
     public function berita_terkini_detail_create()
     {
-        return view('admin.main.berita_terkini.berita_terkini_detail.berita_terkini_detail_create');
+        $m_category_berita_terkini = $this->model->m_category_berita_terkini()->get()->all();
+        return view('admin.main.berita_terkini.berita_terkini_detail.berita_terkini_detail_create',compact('m_category_berita_terkini'));
     }
     public function berita_terkini_detail_save(Request $req)
     {
@@ -38,44 +39,37 @@ class berita_terkini_detailController extends Controller
                 'dbtd_category'=>$req->dbtd_category,
                 'dbtd_title'=>$req->dbtd_title,
                 'dbtd_description'=>$req->dbtd_description,
-                'dbtd_created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/main/berita_terkini_detail');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('/main/berita_terkini_detail/create');
         }
     }
 
-    public function berita_terkini_detail_edit($id){
+    public function berita_terkini_detail_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_berita_terkini_detail()->get()->where('mcp_id',$id);
-        return view('admin.master.berita_terkini_detail.berita_terkini_detail_edit',compact('data'));
+        $data = $this->model->d_berita_terkini_detail()->where('dbtd_id',$req->id)->get()->first();
+        return view('admin.main.berita_terkini.berita_terkini_detail.berita_terkini_detail_edit',compact('data'));
     }
 
     public function berita_terkini_detail_update(Request $req)
     {
-        $simpan = $this->model->d_berita_terkini_detail()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
+        return $req->all();
+        $simpan = $this->model->d_berita_terkini_detail()->where('dbtd_id',$req->dbtd_id)->update([
+            'dbtd_title'=>$req->dbtd_title,
+            'dbtd_description'=>$req->dbtd_description,
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcp_id;
+        return redirect('/main/berita_terkini_detail');
     }
 
-    public function berita_terkini_detail_delete($id)
+    public function berita_terkini_detail_delete(Request $req)
     {
-        // $data = $this->model->m_berita_terkini_detail()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_berita_terkini_detail()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
-    }
-    public function berita_terkini_detail_datatable()
-    {
-        return ('e');
+        // unlink(storage_path('app/public/images/berita_terkini/berita_terkini_'.$req->id.'_image.jpg'));
+        $delete =$this->model->d_berita_terkini_detail()->where('dbtd_id',$req->id)->delete();
+        $berita_terkini_image_delete = $this->model->d_berita_terkini_image()->where('dbti_title',$req->id)->delete();
+        return redirect('/main/berita_terkini_detail');
     }
 }

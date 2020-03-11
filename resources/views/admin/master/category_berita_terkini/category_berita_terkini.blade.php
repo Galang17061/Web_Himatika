@@ -11,10 +11,10 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h4 class="page-title mb-1">Master User</h4>
+                        <h4 class="page-title mb-1">Master Berita Terkini</h4>
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Master</a></li>
-                            <li class="breadcrumb-item active">Master User</li>
+                            <li class="breadcrumb-item active">Master Berita Terkini</li>
                         </ol>
                     </div>
                     <div class="col-md-4">
@@ -25,7 +25,7 @@
                                     <i class="mdi mdi-settings-outline mr-1"></i> Settings
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
-                                <a class="dropdown-item" href="{{route('category_berita_terkini_create')}}"><i class="fas fa-plus"></i>   Create</a>
+                                    <a class="dropdown-item" href="{{route('category_berita_terkini_create')}}"><i class="fas fa-plus"></i>   Create</a>
                                 </div>
                             </div>
                         </div>
@@ -63,10 +63,8 @@
                                                 {{$element->mcbt_title}}
                                             </td>
                                             <td>
-                                            <a href="#">
-                                                <button class="btn btn-sm btn-warning"> Edit</button>
-                                            </a>
-                                                <button class="btn btn-sm btn-danger"> Delete</button>
+                                                <button class="btn btn-sm btn-warning" onclick="edit({{$element->mcbt_id}})"> Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleted({{$element->mcbt_id}})"> Delete</button>
                                                 
                                             </td>
                                         </tr>
@@ -96,6 +94,12 @@
 <script>
     $('#datatable').dataTable();
 
+function edit(argument){
+    window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/master/category_berita_terkini/edit?&id='+argument
+}
 
+function deleted(argument){
+    window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/master/category_berita_terkini/delete?&id='+argument
+}
 </script>
 @endsection

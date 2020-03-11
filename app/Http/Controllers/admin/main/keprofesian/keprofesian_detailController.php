@@ -16,14 +16,15 @@ class keprofesian_detailController extends Controller
         $this->model = new models();
     }
 
-    public function keprofesian_detail(Request $data)
+    public function keprofesian_detail(Request $req)
     {
-         $data = $this->model->d_keprofesian_detail()->get();
+        $data = $this->model->d_keprofesian_detail()->get();
         return view('admin.main.keprofesian.keprofesian_detail.keprofesian_detail',compact('data'));
     }
     public function keprofesian_detail_create()
     {
-        return view('admin.main.keprofesian.keprofesian_detail.keprofesian_detail_create');
+        $m_category_keprofesian = $this->model->m_category_keprofesian()->get()->all();
+        return view('admin.main.keprofesian.keprofesian_detail.keprofesian_detail_create',compact('m_category_keprofesian'));
     }
     public function keprofesian_detail_save(Request $req)
     {
@@ -38,44 +39,37 @@ class keprofesian_detailController extends Controller
                 'dkd_category'=>$req->dkd_category,
                 'dkd_title'=>$req->dkd_title,
                 'dkd_description'=>$req->dkd_description,
-                'dkd_created_at'=>date('Y-m-d h:i:s'),
             ]);
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/main/keprofesian_detail');
         }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            return redirect('/main/keprofesian_detail/create');
         }
     }
 
-    public function keprofesian_detail_edit($id){
+    public function keprofesian_detail_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_keprofesian_detail()->get()->where('mcp_id',$id);
-        return view('admin.master.keprofesian_detail.keprofesian_detail_edit',compact('data'));
+        $data = $this->model->d_keprofesian_detail()->where('dkd_id',$req->id)->get()->first();
+        return view('admin.main.keprofesian.keprofesian_detail.keprofesian_detail_edit',compact('data'));
     }
 
     public function keprofesian_detail_update(Request $req)
     {
-        $simpan = $this->model->d_keprofesian_detail()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
+        return $req->all();
+        $simpan = $this->model->d_keprofesian_detail()->where('dkd_id',$req->dkd_id)->update([
+            'dkd_title'=>$req->dkd_title,
+            'dkd_description'=>$req->dkd_description,
         ]);
-        return Response()->json(['status'=>'sukses']);
-    }
-    
-    public function tes(Request $req){
-        return $req->mcp_id;
+        return redirect('/main/keprofesian_detail');
     }
 
-    public function keprofesian_detail_delete($id)
+    public function keprofesian_detail_delete(Request $req)
     {
-        // $data = $this->model->m_keprofesian_detail()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_keprofesian_detail()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
-    }
-    public function keprofesian_detail_datatable()
-    {
-        return ('e');
+        // unlink(storage_path('app/public/images/keprofesian/keprofesian_'.$req->id.'_image.jpg'));
+        $delete =$this->model->d_keprofesian_detail()->where('dkd_id',$req->id)->delete();
+        $keprofesian_image_delete = $this->model->d_keprofesian_image()->where('dki_title',$req->id)->delete();
+        return redirect('/main/keprofesian_detail');
     }
 }

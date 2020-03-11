@@ -117,8 +117,6 @@
 
 </script>
 
-
-
 <script>
     function edit(argument) {
         window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/post_detail/edit?&id='+argument;
@@ -128,21 +126,4 @@
         window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/post_detail/delete?&id='+argument;
     }
 </script>
-
-<script>
-    $(function () {
-        $("#alert-confirm").click(function () {
-            var a = $(this).val()
-            alertify.confirm("Apakah yakin ingin menghapus?", function () {
-                console.log(a)
-                // window.location.href = baseUrl+'/main/post_detail/delete?&id='.argument
-                alertify.success("Berhasil Menghapus")
-            }, function () {
-                alertify.error("Dibatalkan")
-            })
-        })
-    });
-</script>
-
-{{-- <script src="{{asset('../assets_backend/js/pages/alertifyjs.init.js')}}"></script> --}}
 @endsection

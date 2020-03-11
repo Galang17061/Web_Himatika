@@ -68,14 +68,14 @@
                                                 {{$element->dbd_title}}
                                             </td>
                                             <td>
-                                                {{$element->dbd_description}}
+                                                {!! $element->dbd_description !!}
                                             </td>
                                             <td>
                                                 {{$element->dbd_created_at}}
                                             </td>
                                             <td>
-                                                <button class="btn btn-sm btn-warning"> Edit</button>
-                                                <button class="btn btn-sm btn-danger"> Delete</button>
+                                                <button class="btn btn-sm btn-warning" onclick="edit({{$element->dbd_id}})"> Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleted({{$element->dbd_id}})"> Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -104,5 +104,15 @@
 <script>
     $('#datatable').dataTable();
 
+</script>
+
+<script>
+    function edit(argument) {
+        window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/beasiswa_detail/edit?&id='+argument;
+    }
+
+    function deleted(argument){
+        window.location.href = 'http://localhost/Laravel/Project/himatika_its/public/main/beasiswa_detail/delete?&id='+argument;
+    }
 </script>
 @endsection

@@ -6,6 +6,8 @@ use App\models;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class keprofesian_imageController extends Controller
 {
@@ -15,72 +17,79 @@ class keprofesian_imageController extends Controller
         $this->middleware('auth');
         $this->model = new models();
     }
-
-    // public function test($param){
-    //     return $this->model->m_keprofesian_image()->get()->where('mcp_id',$param);
-
-    // }
-
     
-
     public function keprofesian_image()
     {
-        //  $data = $this->model->d_keprofesian_image()->get();
-        return view('admin.main.keprofesian.keprofesian_image.keprofesian_image');
+        $data = $this->model->d_keprofesian_image()->with('m_category_keprofesian')->with('d_keprofesian_detail')->get()->all();
+        return view('admin.main.keprofesian.keprofesian_image.keprofesian_image',compact('data'));
     }
+
     public function keprofesian_image_create()
     {
-        return view('admin.main.keprofesian.keprofesian_image.keprofesian_image_create');
+        $m_category_keprofesian = $this->model->m_category_keprofesian()->get()->all();
+        $d_keprofesian_detail = $this->model->d_keprofesian_detail()->get()->all();
+        return view('admin.main.keprofesian.keprofesian_image.keprofesian_image_create',compact('m_category_keprofesian','d_keprofesian_detail'));
     }
+
     public function keprofesian_image_save(Request $req)
     {
-        // return $req->all();
+        $this->validate($req,[
+            'image'=>'image|mimes:jpeg,png,jpg,gif,svg|max:2000',
+        ]);
+
         DB::beginTransaction();
         try{
-            $id = $this->model->d_keprofesian_image()->max('mcp_id')+1;
-
-            // Save
-            $simpan = $this->model->d_keprofesian_image()->create([
-                'mcp_id'=>$id,
-                'mcp_title'=>$req->mcp_title,
-                'created_at'=>date('Y-m-d h:i:s'),
+            if(!empty($this->model->d_keprofesian_image()->get('dki_id'))){
+                $delete =$this->model->d_keprofesian_image()->where('dki_id',$req->dki_title)->delete();
+                $simpan = $this->model->d_keprofesian_image()->create([
+                'dki_id'=>$this->model->d_keprofesian_detail()->get('dkd_id')->where('dkd_id',$req->dki_title)->pluck('dkd_id')[0],
+                'dki_category'=>$req->get('dki_category'),
+                'dki_title'=>$req->get('dki_title'),
+                'dki_image'=>'keprofesian_'.$this->model->d_keprofesian_detail()->get('dkd_id')->where('dkd_id',$req->dki_title)->pluck('dkd_id')[0].'_image'.'.jpg',
             ]);
+
+            Storage::putFileAs(
+            'public/images/info_kemahasiswaan/keprofesian',
+            $req->file('image'),
+            'keprofesian_'.$this->model->d_keprofesian_detail()->get('dkd_id')->where('dkd_id',$req->dki_title)->pluck('dkd_id')[0].'_image'.'.jpg');
             DB::commit();
-            return Response()->json(['status'=>'sukses']);
+            return redirect('/main/keprofesian_image');
         }
+        else{
+            return redirect('/main/keprofesian_image');
+        }
+    }
         catch(\Exception $e){
             DB::rollback();
-            return Response()->json(['status'=>'gagal']);
+            print($e);
+            // return redirect('/main/keprofesian_image/create');
         }
     }
 
-    public function keprofesian_image_edit($id){
+    public function keprofesian_image_edit(Request $req){
         // Ojok Dirubah!
-        $data = $this->model->d_keprofesian_image()->get()->where('mcp_id',$id);
-        return view('admin.master.keprofesian_image.keprofesian_image_edit',compact('data'));
+        $data = $this->model->d_keprofesian_image()->where('dki_id',$req->id)->get()->first();
+        return view('admin.main.keprofesian.keprofesian_image.keprofesian_image_edit',compact('data'));
     }
 
     public function keprofesian_image_update(Request $req)
     {
-        $simpan = $this->model->d_keprofesian_image()->where('mcp_id',$req->mcp_id)->update([
-            'mcp_title'=>$req->mcp_title
-        ]);
-        return Response()->json(['status'=>'sukses']);
+        if(!empty($req->file('image'))){
+            Storage::putFileAs(
+                'public/images/info_kemahasiswaan/keprofesian',
+                $req->file('image'),
+                'keprofesian_'.$req->dki_id.'_image.jpg');
+                return redirect('/main/keprofesian_image');
+        }
+        else{
+            return redirect('/main/keprofesian_image/edit');
+        }
     }
     
-    public function tes(Request $req){
-        return $req->mcp_id;
-    }
-
-    public function keprofesian_image_delete($id)
+    public function keprofesian_image_delete(Request $req)
     {
-        // $data = $this->model->m_keprofesian_image()->get()->where('mcp_id',$id);
-        // $update = $data = $this->model->m_keprofesian_image()->get()->where('mcp_id',$id)->update([
-        //     'mcp_title'=>$id->mcp_title
-        // ]);
-    }
-    public function keprofesian_image_datatable()
-    {
-        return ('e');
+        unlink(storage_path('app/public/images/info_kemahasiswaan/keprofesian/keprofesian_'.$req->id.'_image.jpg'));
+        $delete =$this->model->d_keprofesian_image()->where('dki_id',$req->id)->delete();
+        return redirect('/main/keprofesian_image');
     }
 }
